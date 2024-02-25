@@ -1,4 +1,4 @@
-name: cypress-test
+name: e2e-test
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Setup environment
-        uses: anirbanshaw24/r-setup-action@v1
+        uses: anirbanshaw24/r-setup-action@v2
 
       - name: Lint Sass
         if: always()
