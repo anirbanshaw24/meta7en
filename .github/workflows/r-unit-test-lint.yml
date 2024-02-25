@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Setup environment
-        uses: anirbanshaw24/r-setup-action@v2
+        uses: anirbanshaw24/r-setup-action@main
 
       - name: Lint R
         if: always()
