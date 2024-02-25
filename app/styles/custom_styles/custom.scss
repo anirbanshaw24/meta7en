@@ -1,0 +1,23 @@
+// stylelint-disable selector-class-pattern
+
+.modal {
+  overflow: hidden;
+}
+
+.shiny-notification {
+  padding: 1rem 2rem 0.5rem 1rem !important;
+}
+
+.dataTables_wrapper {
+  text-align: -webkit-center;
+}
+
+.welcome-text {
+  h1 {
+    align-self: center;
+  }
+}
+
+textarea.form-control {
+  height: 300px !important;
+}

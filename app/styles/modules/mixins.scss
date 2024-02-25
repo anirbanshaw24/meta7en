@@ -1,0 +1,16 @@
+/* The button-maker */
+@mixin arrow-button {
+  clip-path:
+    polygon(
+      0 0,
+      30px 50%,
+      0 100%,
+      calc(100% - 30px) 100%,
+      100% 50%,
+      calc(100% - 30px) 0
+    );
+}
+
+@mixin bevel-button {
+  border-radius: 20px 20px 1px 1px;
+}

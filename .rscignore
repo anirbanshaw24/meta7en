@@ -1,0 +1,12 @@
+.github
+.lintr
+.renvignore
+.rhino
+.rscignore
+tests
+
+shiny_bookmarks
+.RData
+data
+trials.R
+README.txt

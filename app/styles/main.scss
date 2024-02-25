@@ -1,0 +1,16 @@
+// stylelint-disable scss/no-global-function-names
+
+// Colors, mixins and body styles
+@import "modules/theme";
+@import "modules/mixins";
+@import "modules/body";
+
+// Page styles
+@import "custom_styles/pop_over";
+@import "modules/brand_header";
+
+// custom_styles/custom MUST be the last import
+@import "custom_styles/shiny_widgets";
+@import "custom_styles/bslib_custom";
+@import "custom_styles/welcome_tab";
+@import "custom_styles/custom";

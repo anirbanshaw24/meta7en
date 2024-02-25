@@ -1,0 +1,42 @@
+default:
+  common_files:
+    renv_lock:
+      source_code:
+        - "renv.lock"
+      app_code:
+        - "renv.lock"
+    renviron:
+      source_code:
+        - ".Renviron"
+      app_code:
+        - "app"
+        - "source_code_assets"
+        - ".Renviron"
+    renv_activate:
+      source_code:
+        - "renv"
+        - "activate.R"
+      app_code:
+        - "app"
+        - "source_code_assets"
+        - "activate.R"
+    rprofile:
+      source_code:
+        - ".Rprofile"
+      app_code:
+        - ".Rprofile"
+    rproj:
+      source_code:
+        - "code.Rproj"
+      app_code:
+        - "app"
+        - "source_code_assets"
+        - "code.Rproj"
+    config:
+      source_code:
+        - "config.yml"
+      app_code:
+        - "config.yml"
+  rendering_options:
+    output_format: "all"
+    clean: TRUE

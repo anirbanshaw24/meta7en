@@ -1,0 +1,7 @@
+# Change ENVIRONMENT as relevant
+# One of: "default", "prod", "dev"
+ENVIRONMENT="shinyapps"
+# Update DB_PASSWORD with your password
+DB_PASSWORD="password"
+# Allow clipr
+CLIPR_ALLOW=TRUE

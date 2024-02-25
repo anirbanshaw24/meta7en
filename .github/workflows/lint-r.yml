@@ -1,0 +1,19 @@
+name: lint-r
+on:
+  push:
+    branches:
+      - "DISABLE"
+permissions:
+  contents: read
+jobs:
+  main:
+    name: Lint R
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup environment
+        uses: anirbanshaw24/r-setup-action@v1
+
+      - name: Lint R
+        if: always()
+        shell: Rscript {0}
+        run: rhino::lint_r()

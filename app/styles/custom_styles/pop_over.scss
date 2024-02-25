@@ -1,0 +1,9 @@
+// stylelint-disable scss/no-global-function-names
+
+.popover-header {
+  background: adjust-color($info, $lightness: 20%);
+}
+
+.popover-body {
+  background: adjust-color($info, $lightness: 25%);
+}

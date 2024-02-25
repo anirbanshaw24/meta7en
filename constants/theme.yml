@@ -1,0 +1,21 @@
+default:
+  primary: "#0f4c81"
+  secondary: "#009473"
+  light: "#f6fffd"
+  dark: "#002018"
+  success: "#71cc51"
+  info: "#0f4c81"
+  warning: "#dd4124"
+  danger: "#bf1932"
+  white: "#fff"
+  black: "#000"
+  brand_colors:
+    dark_purple: "#5f4b8b"
+    light_purple: "#6667ab"
+    light_braown: "#edf5ed"
+  bs_var_settings:
+    card-spacer-x: "0.5rem"
+    card-spacer-y: "0.5rem"
+    spacer: "0.5rem"
+    accordion-body-padding-x: "0.5rem"
+    accordion-body-padding-y: "0.5rem"

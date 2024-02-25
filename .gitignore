@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+shiny_bookmarks
+rsconnect
+README.txt
+
+*.DS_Store

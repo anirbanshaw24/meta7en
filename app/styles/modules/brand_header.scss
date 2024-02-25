@@ -1,0 +1,42 @@
+// stylelint-disable scss/no-global-function-names
+
+.bslib-page-navbar > .navbar,
+.bslib-page-dashboard > .navbar {
+  padding-top: 0;
+  padding-bottom: 2px;
+}
+
+.nav-link {
+  @include bevel-button;
+
+  background: adjust-color($secondary, $lightness: -5%);
+  text-align: -webkit-center;
+
+  &.active,
+  &:hover {
+    background: adjust-color($secondary, $lightness: -20%);
+  }
+}
+
+.app-title {
+  display: inline !important;
+
+  img {
+    height: 40px;
+    margin-right: 20px;
+  }
+}
+
+.app-footer {
+  align-self: center;
+  display: flex;
+
+  .footer-images {
+    height: 25px;
+    right: 5px;
+    bottom: 2px;
+    position: fixed;
+    display: flex;
+    gap: 7px;
+  }
+}

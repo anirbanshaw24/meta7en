@@ -1,0 +1,13 @@
+default:
+  app_title: "meta7en: A PoC App"
+  app_version: 0.0.1
+  built_by: ""
+  tab1_title: "Introduction"
+  tab2_title: "Some Plots"
+  tab3_title: "Inputs Demo"
+  footer_images:
+    - "shinymeta.png"
+    - "bslib.png"
+    - "S7.png"
+    - "rhino.png"
+    - "thematic.png"

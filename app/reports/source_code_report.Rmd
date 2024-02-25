@@ -1,0 +1,23 @@
+---
+title: "Code"
+author: "Data Designer"
+always_allow_html: true
+output:
+  html_document:
+    code_folding: "show"
+---
+
+```{r setup, results="hide", message=FALSE, class.source = 'fold-hide'}
+renv::restore(prompt = FALSE)
+box::use(knitr)
+knitr$opts_chunk$set(
+  out.width = "100%",
+  tidy = TRUE,
+  tidy.opts = list(width.cutoff = 30)
+)
+```
+
+
+```{r code}
+{{shinymeta_code}}
+```

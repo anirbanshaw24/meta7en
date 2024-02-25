@@ -1,0 +1,24 @@
+name: build-js
+on:
+  push:
+    branches:
+      - "DISABLE"
+permissions:
+  contents: read
+jobs:
+  main:
+    name: Build and lint js
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup environment
+        uses: anirbanshaw24/r-setup-action@v1
+
+      - name: Lint JavaScript
+        if: always()
+        shell: Rscript {0}
+        run: rhino::lint_js()
+
+      - name: Build JavaScript
+        if: always()
+        shell: Rscript {0}
+        run: rhino::build_js()

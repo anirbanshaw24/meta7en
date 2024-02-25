@@ -1,0 +1,17 @@
+.tab-pane {
+  justify-content: space-evenly !important;
+}
+
+.welcome-page * {
+  justify-content: space-evenly !important;
+}
+
+.welcome-text {
+  h1 {
+    color: $dark;
+  }
+
+  h4 {
+    color: $primary;
+  }
+}

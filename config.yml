@@ -1,0 +1,29 @@
+default:
+  rhino_log_level: !expr Sys.getenv("RHINO_LOG_LEVEL", "INFO")
+  rhino_log_file: !expr Sys.getenv("RHINO_LOG_FILE", NA)
+  app_font: "Helvetica Neue"
+  database:
+    user_name: "default"
+    db_name: "duck_db"
+    db_dir: ":memory:"
+    host: ""
+  warn_option: 0
+  bookmark_location: "server"
+shinyapps:
+  app_font: "Fredoka One"
+  database:
+    user_name: "production"
+    db_name: "duck_db"
+    db_dir: ":memory:"
+    host: ""
+  warn_option: -1
+  bookmark_location: "url"
+dev:
+  app_font: "Crimson Pro"
+  database:
+    user_name: "developer"
+    db_name: "duck_db"
+    db_dir: ":memory:"
+    host: ""
+  warn_option: 0
+  bookmark_location: "server"

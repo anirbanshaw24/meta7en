@@ -1,0 +1,10 @@
+default:
+  image_path: !expr normalizePath(file.path("app", "static", "images", "clinical.jpg"))
+  text_header: "An application with shinymeta, bslib, rhino, S7,
+  thematic and more"
+  text_body: "Welcome to the Data Analysis Dashboard, an advanced
+  R Shiny application designed to empower users with a suite of
+  cutting-edge tools for interactive data exploration and visualization.
+  This application leverages the power of shinymeta, bslib, rhino, S7,
+  thematic, and more to provide a seamless and intuitive experience for
+  data analysis."

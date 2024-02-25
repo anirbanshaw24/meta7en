@@ -1,0 +1,141 @@
+/* stylelint-disable scss/no-global-function-names, no-descending-specificity, selector-class-pattern */
+/* stylelint-disable color-function-notation */
+
+.checkbox-primary input[type="checkbox"]:checked + label::before,
+.checkbox-primary input[type="radio"]:checked + label::before {
+  background-color: $shiny_widgets_primary;
+  border-color: $shiny_widgets_primary;
+}
+
+.radio-primary input[type="radio"]:checked + label::before {
+  border-color: $shiny_widgets_primary;
+}
+
+.radio-primary input[type="radio"]:checked + label::after {
+  background-color: $shiny_widgets_primary;
+}
+
+.radio-primary input[type="radio"] + label::after {
+  background-color: $shiny_widgets_primary;
+}
+
+.noUi-connect {
+  background: $shiny_widgets_primary;
+}
+
+.knob-input {
+  color: $shiny_widgets_primary !important;
+}
+
+.irs--shiny .irs-bar {
+  border-top: 1px solid $shiny_widgets_primary;
+  border-bottom: 1px solid $shiny_widgets_primary;
+  background: $shiny_widgets_primary;
+}
+
+.irs--shiny .irs-handle {
+  background-color: $shiny_widgets_primary;
+}
+
+.treejs .treejs-node__halfchecked > .treejs-checkbox::before {
+  background-color: $shiny_widgets_primary;
+  border-color: $shiny_widgets_primary;
+}
+
+.bttn-unite.bttn-default {
+  border-color: $shiny_widgets_primary;
+  color: $shiny_widgets_primary;
+}
+
+.bttn-unite.bttn-default:focus,
+.bttn-unite.bttn-default:hover {
+  color: $shiny_widgets_primary;
+  background: adjust-color($shiny_widgets_primary, $lightness: 75%);
+}
+
+.bttn-unite.bttn-default::before {
+  background: adjust-color($shiny_widgets_primary, $lightness: 5%);
+  opacity: 0.5;
+}
+
+.bttn-unite.bttn-default::after {
+  background: adjust-color($shiny_widgets_primary, $lightness: 15%);
+  opacity: 0.3;
+}
+
+.irs--shiny .irs-from,
+.irs--shiny .irs-to,
+.irs--shiny .irs-single {
+  color: $light;
+  background-color: $shiny_widgets_primary;
+}
+
+.treejs .treejs-node__checked > .treejs-checkbox::before {
+  background-color: $shiny_widgets_primary;
+  border-color: $shiny_widgets_primary;
+}
+
+.irs--shiny .irs-handle.state_hover,
+.irs--shiny .irs-handle:hover {
+  background: $shiny_widgets_primary;
+}
+
+.air-datepicker-cell.-selected-,
+.air-datepicker-cell.-selected-.-current- {
+  color: $light;
+  background: $shiny_widgets_primary;
+}
+
+.air-datepicker-cell.-selected-.-focus- {
+  background: $shiny_widgets_primary;
+}
+
+.air-datepicker-body--day-name {
+  color: $shiny_widgets_secondary;
+}
+
+.air-datepicker-cell.-current- {
+  color: $shiny_widgets_primary;
+}
+
+.air-datepicker-button {
+  color: $shiny_widgets_primary;
+}
+
+.datepicker table tr td.active:active,
+.datepicker table tr td.active.active,
+.datepicker table tr td.active.highlighted:active,
+.datepicker table tr td.active.highlighted.active {
+  color: $white;
+  background-color: $shiny_widgets_primary;
+  border-color: $shiny_widgets_primary;
+}
+
+.datepicker table tr td span.active:active,
+.datepicker table tr td span.active.active,
+.datepicker table tr td span.active:hover:active,
+.datepicker table tr td span.active:hover.active,
+.datepicker table tr td span.active.disabled:active,
+.datepicker table tr td span.active.disabled.active,
+.datepicker table tr td span.active.disabled:hover:active,
+.datepicker table tr td span.active.disabled:hover.active {
+  color: $white;
+  background-color: $shiny_widgets_primary;
+  border-color: $shiny_widgets_primary;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+  background: $shiny_widgets_primary;
+  color: $white;
+}
+
+.vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after {
+  border-color: $shiny_widgets_primary;
+  border-left-color: rgba(0, 0, 0, 0%);
+  border-top-color: rgba(0, 0, 0, 0%);
+}
+
+.selectize-dropdown .selected {
+  background-color: $shiny_widgets_secondary;
+}

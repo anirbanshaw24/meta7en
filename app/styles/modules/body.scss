@@ -1,0 +1,27 @@
+// stylelint-disable scss/no-global-function-names
+
+body {
+  padding-top: 3.5vh !important;
+  padding-bottom: 0.5vh !important;
+
+  & .tab-pane {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: $light;
+  border: 1px solid adjust-color($light, $lightness: 5%);
+  box-shadow: inset 0 0 6px adjust-color($light, $lightness: -5%);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: adjust-color($light, $lightness: -10%);
+}

@@ -1,0 +1,29 @@
+name: cypress-test
+on:
+  push:
+    branches:
+      - "DISABLE"
+permissions:
+  contents: read
+jobs:
+  main:
+    name: Run App cypress e2e test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup environment
+        uses: anirbanshaw24/r-setup-action@v1
+
+      - name: Lint Sass
+        if: always()
+        shell: Rscript {0}
+        run: rhino::lint_sass()
+
+      - name: Run Cypress end-to-end tests
+        if: always()
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: .rhino # Created by earlier commands which use Node.js
+          start: npm run run-app
+          project: ../tests
+          wait-on: 'http://localhost:3333/'
+          wait-on-timeout: 60

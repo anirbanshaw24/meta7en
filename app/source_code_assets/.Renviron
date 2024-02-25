@@ -1,0 +1,5 @@
+# Change ENVIRONMENT as relevant
+# One of: "default", "prod" or "dev"
+ENVIRONMENT="default"
+# Update DB_PASSWORD with your password
+DB_PASSWORD="password"
