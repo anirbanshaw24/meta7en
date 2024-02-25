@@ -7,11 +7,9 @@ title: "meta7en"
 # A bslib app built with Rhino and S7 classes
 
 <!-- badges: start -->
-[![lint-r](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/lint-r.yml/badge.svg)](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/lint-r.yml)
-[![unit-test](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/unit-test.yml/badge.svg)](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/unit-test.yml)
-[![build-sass](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/build-sass.yml/badge.svg)](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/build-sass.yml)
-[![build-js](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/build-js.yml/badge.svg)](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/build-js.yml)
-[![cypress-test](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/cypress-test.yml/badge.svg)](https://github.com/anirbanshaw24/rhino-app-example/actions/workflows/cypress-test.yml)
+[![r-unit-test-lint](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml)
+[![build-js-sass](https://github.com/anirbanshaw24/meta7en/actions/workflows/build-js-sass.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/build-js-sass.yml)
+[![e2e-test](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml)
 <!-- badges: end -->
 
 The goal of rhino-app-example is to demostrate S7 classes, shinymeta, bslib and Rhino.
