@@ -2,7 +2,7 @@
 title: "meta7en"
 ---
 
-<img align="right" width="100" height="120" src="app/static/images/app_hex.png">
+<img align="right" width="100" height="110" src="app/static/images/app_hex.png">
 
 # A bslib app built with Rhino and S7 classes
 
