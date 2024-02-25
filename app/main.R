@@ -142,7 +142,8 @@ ui <- function(id) {
       bslib$card(
         HTML(
           markdown$markdownToHTML(
-            knitr$knit("README.md", quiet = T), fragment.only = T
+            knitr$knit("README.md", quiet = TRUE),
+            fragment.only = TRUE
           )
         )
       )
