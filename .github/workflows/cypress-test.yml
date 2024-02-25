@@ -2,7 +2,7 @@ name: cypress-test
 on:
   push:
     branches:
-      - "DISABLE"
+      - "main"
 permissions:
   contents: read
 jobs:

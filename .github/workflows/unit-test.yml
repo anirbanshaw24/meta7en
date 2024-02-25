@@ -2,7 +2,7 @@ name: unit-test
 on:
   push:
     branches:
-      - "DISABLE"
+      - "main"
 permissions:
   contents: read
 jobs:
