@@ -1,4 +1,4 @@
-name: build-sass
+name: build-js-sass
 on:
   push:
     branches:
@@ -7,11 +7,21 @@ permissions:
   contents: read
 jobs:
   main:
-    name: Build and lint sass
+    name: Build and lint js & sass
     runs-on: ubuntu-22.04
     steps:
       - name: Setup environment
-        uses: anirbanshaw24/r-setup-action@v1
+        uses: anirbanshaw24/r-setup-action@v2
+
+      - name: Lint JavaScript
+        if: always()
+        shell: Rscript {0}
+        run: rhino::lint_js()
+
+      - name: Build JavaScript
+        if: always()
+        shell: Rscript {0}
+        run: rhino::build_js()
 
       - name: Lint Sass
         if: always()
