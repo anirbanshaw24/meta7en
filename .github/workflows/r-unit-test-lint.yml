@@ -1,4 +1,4 @@
-name: build-js
+name: r-unit-test-lint
 on:
   push:
     branches:
@@ -7,18 +7,18 @@ permissions:
   contents: read
 jobs:
   main:
-    name: Build and lint js
+    name: Unit test & lint R
     runs-on: ubuntu-22.04
     steps:
       - name: Setup environment
         uses: anirbanshaw24/r-setup-action@v1
 
-      - name: Lint JavaScript
+      - name: Lint R
         if: always()
         shell: Rscript {0}
-        run: rhino::lint_js()
+        run: rhino::lint_r()
 
-      - name: Build JavaScript
+      - name: Run R unit tests
         if: always()
         shell: Rscript {0}
-        run: rhino::build_js()
+        run: rhino::test_r()
