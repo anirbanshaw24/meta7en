@@ -2,7 +2,7 @@ name: lint-r
 on:
   push:
     branches:
-      - "DISABLE"
+      - "main"
 permissions:
   contents: read
 jobs:
