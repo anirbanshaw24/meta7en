@@ -14,7 +14,7 @@ date: 26 Feb, 2024
 [![e2e-test](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml)
 <!-- badges: end -->
 
-# Overview
+## Overview
 
 meta7en is an R Shiny application showcasing the synergy of { S7 } classes, { shinymeta }, { bslib }, and { rhino }. This combination delivers a cutting-edge, robust, scalable, user-friendly, and themed application. It leverages modularity and theming to provide a fast and pleasant user experience.
 
