@@ -18,7 +18,7 @@ date: 26 Feb, 2024
 
 meta7en is an R Shiny application showcasing the synergy of { S7 } classes, { shinymeta }, { bslib }, and { rhino }. This combination delivers a cutting-edge, robust, scalable, user-friendly, and themed application. It leverages modularity and theming to provide a fast and pleasant user experience.
 
-<img align="center" src="app/static/images/app_main.png">
+<a href="https://anirbanshaw24.shinyapps.io/meta7en" target="_blank"><img align="center" style="border: 1px solid black;" width="1000" src="app/static/images/app_main.png"></a>
 
 ## Key Features
 
