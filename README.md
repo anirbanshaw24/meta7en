@@ -1,10 +1,12 @@
 ---
 title: "meta7en"
+author: Anirban Shaw
+date: 26 Feb, 2024
 ---
 
-<img align="right" width="100" height="110" src="app/static/images/app_hex.png">
+<img align="right" width="100" height="115" src="app/static/images/app_hex.png">
 
-# A bslib app built with Rhino and S7 classes
+# A { bslib } - { rhino } app built with { shinymeta } and { S7 } classes
 
 <!-- badges: start -->
 [![r-unit-test-lint](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml)
@@ -12,174 +14,56 @@ title: "meta7en"
 [![e2e-test](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml)
 <!-- badges: end -->
 
-The goal of rhino-app-example is to demostrate S7 classes, shinymeta, bslib and Rhino.
+# Overview
 
-This application is designed to provide tools for data processing, visualization, and interactive exploration. Below you will find information about the structure of the application, its modules, and how to navigate its features.
+meta7en is an R Shiny application showcasing the synergy of { S7 } classes, { shinymeta }, { bslib }, and { rhino }. This combination delivers a cutting-edge, robust, scalable, user-friendly, and themed application. It leverages modularity and theming to provide a fast and pleasant user experience.
 
-## Packages
+## Key Features
 
-The application utilizes several R packages to enable its functionality. These packages are loaded and used within the application:
+### Brands, Colors, and Themes
 
-```
-packages_code <- quote(
-  box::use(
-    shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    config,
-    bsicons,
-    thematic,
-    duckdb,
-    datasets,
-    purrr,
-    rlang,
-    # Import packages here
-  )
-)
-```
+- Centralized Color Management: All colors in the app stem from a single source, ensuring consistency across elements.
 
-## Logic and Function Modules
+- Easy Theming: Changing color definitions updates all elements, including cards, shiny inputs, headers, dropdowns, plots, tables, and icons, maintaining a cohesive theme.
 
-The logic and function modules are essential for the backend operations of the application. These modules handle database management, data processing, and utility functions. Here is how they are loaded:
+- Customization: While the app has a unified theme, it remains customizable for specific needs.
 
+### Database connections
 
-```
-function_modules_code <- quote(
-  box::use(
-    app/logic/database_manager,
-    app/logic/data_processor[get_valid_data_names],
-    app/logic/app_utils[
-      get_db_setup_code, get_n_colors, register_echarts_theme,
-      build_app_hex
-    ],
-    # Import function modules here
-  )
-)
-```
+- { S7 } Class for Database Management: Utilizing an { S7 } class for database management offers several advantages:
 
-## Shiny Modules
+- Transactional Integrity: Transactions with a pool are managed, ensuring all SQL queries either fully execute or none do.
 
-Shiny modules define the UI elements and interactive components of the application. They are responsible for creating the user interface that users interact with:
+- Secure Password Handling: Passwords are stored in a .Renviron file, safeguarding them from exposure in R code.
 
-```
-shiny_modules_code <- quote(
-  box::use(
-    app/view/title,
-    app/view/welcome_tab,
-    app/view/data_tab,
-    app/view/plot_tab,
-    app/view/footer,
-    app/view/inputs_demo_tab,
-    # Import shiny modules here
-  )
-)
+- Safe SQL Query Execution: Queries are wrapped in `glue_sql()`, preventing SQL injection vulnerabilities.
 
-```
+- Efficient Resource Usage: The pool is generated at app start and used throughout, preventing leaks.
 
-## Setting up the Application
+### Extracting source code
 
-To initialize the application with the necessary configurations and themes, the following code is executed:
+Extracting the code leading to a specific output can be challenging if not designed properly from the start. 
 
-```
-app_config <- config$get(config = Sys.getenv("ENVIRONMENT"))
-app_theme <- config$get(file = file.path("constants", "theme.yml"))
+- Thats why we are using { shinymeta } to make this process easy, modular and reproducible. In this app, we have a { DT } table showing a data that can be modified. 
 
-options(shiny.useragg = TRUE)
-options(warn = app_config$warn_option)
+- The modifications are in separate modules and { shinymeta } is able to track this and extract the source code.
 
-thematic$thematic_shiny(
-  bg = app_theme$light,
-  fg = app_theme$dark,
-  accent = app_theme$secondary,
-  qualitative = get_n_colors(app_theme$primary, app_theme$success, n = 3),
-  font = thematic$font_spec(
-    scale = 1.75
-  )
-)
+- To achieve this, we are using { shinymeta } reactive statements like `metaReactive`, `metaObserve` in place of `reactive` and `observeEvent` from { shiny }.
 
-enableBookmarking(store = app_config$bookmark_location)
+### Framework
 
-build_app_hex(app_theme)
-```
+We are using { rhino }, but modified the structure to fit use cases of source code and themes. We are using { box } to import any modules to the application. { renv } is used for managing R dependencies.
 
-## User Interface (UI)
+### Docker
 
-The UI of the application is structured using bslib for styling and layout. Here is an overview of the main UI components:
-
-- Navbar: The top navigation bar includes tabs for different sections of the application.
-- Left Tabs: Tabs for main functionalities like data processing, visualization, and demos.
-- Right Tabs: Additional menu options and information.
-
-The UI is defined as a function `ui <- function(id) { ... }`. It includes elements like the title, tabs, and menu items. The UI is constructed using Bootstrap components and custom styles defined in the `theme.yml` file.
-
-## Server Logic
-
-The server logic defines the backend operations of the application. It includes setting up the database, handling user interactions, and managing sessions:
-
-```
-server <- function(id) {
-  moduleServer(id, function(input, output, session) {
-    ns <- NS(id)
-
-    module_reactive_values <- reactiveValues(
-      data_colnames = NULL
-    )
-
-    db_setup_code <- get_db_setup_code()
-    eval(db_setup_code)
-
-    plot_tab$server(
-      "plot_tab", app_database_manager
-    )
-
-    data_tab$server(
-      "data_tab", app_database_manager
-    )
-
-    # DB is disconnected and shut down!
-    onSessionEnded(function() {
-      app_database_manager %>%
-        database_manager$disconnect_database()
-    })
-    # Make sure DB is disconnected and shut down!
-    onStop(function() {
-      app_database_manager %>%
-        database_manager$disconnect_database()
-    })
-  })
-}
-```
-
-## Using `shinymeta` for Source Code
-
-`shinymeta` is used in the application to view and download the source code that generates the results. Below is an example of a module with source code generation:
-
-```
-source_code_module$server(
-  "source_code_module", dt_output$dt_output,
-  packages = rlang$expr({
-    !!packages_code
-    !!set_col_class_module$packages_code
-  }),
-  modules = rlang$expr({
-    !!function_modules_code
-    !!set_col_class_module$function_modules_code
-  })
-)
-```
+This is work is progress.
 
 ## Additional Notes
 
-- The application is designed to be modular and extensible. New functionality can be added by creating additional logic and UI modules.
-- Bookmarking is enabled to allow users to save and restore their application state.
-- The `README.md` file is rendered within the application under the "Read Me" tab, providing users with documentation and information about the application.
-- Thank you for using our web application! If you have any questions or feedback, please feel free to reach out to the development team.
+- Modular Design: Easily extendable with new functionality by creating additional logic and UI modules.
 
+- Bookmarking: Users can save and restore their application state.
 
+- Documentation: This README.md is view able within the application under the "Read Me" tab, providing users with valuable information.
 
-
-
-
-
-
+- Feedback: We appreciate your usage of our web application! For questions or feedback, please reach out to the development team.
