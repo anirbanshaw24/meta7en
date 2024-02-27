@@ -76,10 +76,10 @@ server <- function(id, selected_data, app_database_manager) {
     observeEvent(selected_data(), {
 
       update_var_select_input(
-        inputId = "x_var", selected_data(), session = session
+        input_id = "x_var", selected_data(), session = session
       )
       update_var_select_input(
-        inputId = "y_var", selected_data(),
+        input_id = "y_var", selected_data(),
         session = session
       )
     })

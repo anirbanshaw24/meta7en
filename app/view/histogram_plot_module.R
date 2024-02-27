@@ -71,11 +71,11 @@ server <- function(id, selected_data, app_database_manager) {
 
     observeEvent(selected_data(), {
       update_var_select_input(
-        inputId = "x_var", selected_data(),
+        input_id = "x_var", selected_data(),
         allowed_col_types = c("numeric", "integer"), session = session
       )
       update_var_select_input(
-        inputId = "fill_var", selected_data(),
+        input_id = "fill_var", selected_data(),
         allowed_col_types = c("factor", "character"),
         preffix_choices = list(
           None = ""

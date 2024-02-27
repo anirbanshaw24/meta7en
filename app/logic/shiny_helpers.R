@@ -28,7 +28,7 @@ get_col_choices <- function(allowed_cols, preffix_choices, suffix_choices) {
 
 #' @export
 update_var_select_input <- function(
-    inputId, selected_data, allowed_col_types = c(
+    input_id, selected_data, allowed_col_types = c(
       "numeric", "integer", "character", "factor"
     ),
     preffix_choices = NULL,
@@ -41,7 +41,7 @@ update_var_select_input <- function(
     allowed_cols, preffix_choices, suffix_choices
   )
   updateSelectInput(
-    inputId = inputId, choices = col_choices,
+    inputId = input_id, choices = col_choices,
     selected = col_choices[1], session = session
   )
 }
@@ -53,6 +53,3 @@ get_true_false_choices <- function() {
     "No" = FALSE
   )
 }
-
-
-

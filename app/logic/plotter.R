@@ -90,7 +90,7 @@ line_plot_echarts <- function(
   }
 
   data %>%
-    dplyr$mutate(row_num = 1:dplyr$n()) %>%
+    dplyr$mutate(row_num = seq_len(dplyr$n())) %>%
     echarts4r$e_charts_(x_var) %>%
     echarts4r$e_line_(y_var) %>%
     echarts4r$e_y_axis(scale = TRUE) %>%
