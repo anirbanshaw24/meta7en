@@ -55,7 +55,7 @@ register_echarts_theme <- function(app_theme) {
   echarts4r$e_theme_register(
     jsonlite$toJSON(
       list(color = c(app_theme$secondary, app_theme$primary, app_theme$success))
-    ), name = "myTheme"
+    ), name = "app_theme"
   )
 }
 

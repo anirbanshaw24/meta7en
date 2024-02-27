@@ -24,7 +24,7 @@ function_modules_code <- quote(
     app/logic/database_manager,
     app/logic/data_processor[get_valid_data_names],
     app/logic/app_utils[
-      get_db_setup_code, get_n_colors, register_echarts_theme,
+      get_db_setup_code, get_n_colors,
       build_app_hex
     ],
     # Import function modules here
@@ -105,7 +105,6 @@ ui <- function(id) {
     # Left Tabs
     bslib$nav_panel(
       title = main_page_constants$tab1_title,
-      register_echarts_theme(app_theme),
       welcome_tab$ui(ns("welcome_tab"))
     ),
     bslib$nav_panel(

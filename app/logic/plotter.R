@@ -97,6 +97,5 @@ line_plot_echarts <- function(
     echarts4r$e_axis_labels(
       x = x_var,
       y = y_var
-    ) %>%
-    echarts4r$e_theme("myTheme")
+    )
 }
