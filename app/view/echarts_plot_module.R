@@ -93,17 +93,19 @@ server <- function(id, selected_data, app_database_manager) {
       )
     })
 
-    output$echarts_plot <- shinymeta$metaRender(
+    output$echarts_plot <- shinymeta$metaRender2(
       echarts4r$renderEcharts4r, {
         req(input$x_var)
         req(input$y_var)
 
-        ..(isolate(selected_data())) %>%
-          line_plot_echarts(
-            x_var = ..(input$x_var),
-            y_var = ..(input$y_var),
-            group_var = ..(input$group_var)
-          )
+        shinymeta$metaExpr({
+          ..(isolate(selected_data())) %>%
+            line_plot_echarts(
+              x_var = ..(input$x_var),
+              y_var = ..(input$y_var),
+              group_var = ..(input$group_var)
+            )
+        })
       }
     )
 
