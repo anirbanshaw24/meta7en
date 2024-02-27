@@ -48,7 +48,7 @@ eval(packages_code)
 eval(function_modules_code)
 eval(shiny_modules_code)
 
-
+Sys.setenv(ENVIRONMENT = "shinyapps")
 
 app_config <- config$get(config = Sys.getenv("ENVIRONMENT"))
 app_theme <- config$get(file = file.path("constants", "theme.yml"))

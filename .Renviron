@@ -5,3 +5,5 @@ ENVIRONMENT="shinyapps"
 DB_PASSWORD="password"
 # Allow clipr
 CLIPR_ALLOW=TRUE
+# App Password
+APP_PASSWORD="jedi42"

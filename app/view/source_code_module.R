@@ -48,6 +48,7 @@ ui <- function(id) {
 #' @export
 server <- function(id, output_to_trace, packages, modules) {
   moduleServer(id, function(input, output, session) {
+    ns <- session$ns
 
     module_reactive_values <- reactiveValues(
       source_code = NULL,
@@ -72,6 +73,13 @@ server <- function(id, output_to_trace, packages, modules) {
       )
     })
 
+    observeEvent(input$enter_password, {
+      if (input$set_environment == Sys.getenv("APP_PASSWORD"))
+        Sys.setenv(ENVIRONMENT = "dev")
+      else Sys.setenv(ENVIRONMENT = "shinyapps")
+      removeModal()
+    })
+
     output$download_code <- downloadHandler(
       filename = function() {
         app_utils$date_time_filename("source_code_bundle")
@@ -82,12 +90,20 @@ server <- function(id, output_to_trace, packages, modules) {
           showModal(
             modalDialog(
               bslib$card(
-                "Not Allowed"
+                h2("Not Allowed"),
+                passwordInput(
+                  ns("set_environment"), label = "Unlock",
+                  placeholder = "Enter Password"
+                ),
+                actionButton(
+                  ns("enter_password"), "Unlock"
+                )
               )
             )
           )
           return()
         } else {
+          Sys.setenv(ENVIRONMENT = "shinyapps")
           ec <- shinymeta$newExpansionContext()
 
           shinymeta$buildRmdBundle(
