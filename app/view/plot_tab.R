@@ -56,7 +56,7 @@ ui <- function(id) {
     ),
     bslib$accordion(
       id = ns("plot_tab_main_accordion"),
-      open = c("echarts Plot"),
+      open = c("Density Plot"),
       multiple = FALSE,
       bslib$accordion_panel(
         "Density Plot",
