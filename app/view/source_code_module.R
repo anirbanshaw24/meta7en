@@ -92,7 +92,7 @@ server <- function(id, output_to_trace, packages, modules) {
               bslib$card(
                 h2("Not Allowed"),
                 passwordInput(
-                  ns("set_environment"), label = "Unlock",
+                  ns("set_environment"), label = NULL,
                   placeholder = "Enter Password"
                 ),
                 actionButton(
