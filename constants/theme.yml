@@ -19,3 +19,5 @@ default:
     spacer: "0.5rem"
     accordion-body-padding-x: "0.5rem"
     accordion-body-padding-y: "0.5rem"
+    btn-padding-x: "0.5rem"
+    btn-padding-y: "0.5rem"

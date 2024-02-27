@@ -41,7 +41,7 @@ ui <- function(id) {
 
   bslib$card_body(
     actionButton(ns("view_code"), "View Code", icon("code")),
-    downloadButton(ns("download_code"), "Get Code")
+    downloadButton(ns("download_code"), "Reproducible ZIP")
   )
 }
 
