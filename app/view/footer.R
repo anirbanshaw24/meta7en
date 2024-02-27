@@ -33,9 +33,17 @@ eval(shiny_modules_code)
 ui <- function(id, main_page_constants) {
   ns <- NS(id)
 
+  latest_commit <- system(
+    intern = TRUE,
+    "git log -1 --pretty='format:%cd' --date=format:'%Y-%m-%d'"
+  )
+
   div(
     class = "app-footer",
-    glue$glue("App v{main_page_constants$app_version} | "),
+    glue$glue(
+      "App v{main_page_constants$app_version}
+      built on {latest_commit} | "
+    ),
     glue$glue("Maintained by"),
     HTML("&nbsp;"),
     tags$a(
