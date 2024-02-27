@@ -71,9 +71,9 @@ build_app_hex <- function(
     u_color = app_theme$success,
     hex_image,
     p_size = 80,
-    s_x = 1,
-    s_y = 0.65,
-    s_width = 0.4,
+    s_x = 0.95,
+    s_y = 0.7,
+    s_width = 0.7,
     dpi = 800,
     filename = hex_output
   )
