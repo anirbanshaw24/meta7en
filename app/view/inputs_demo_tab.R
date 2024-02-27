@@ -26,8 +26,6 @@ function_modules_code <- quote(
 # Shiny Modules
 shiny_modules_code <- quote(
   box::use(
-    app/view/histogram_plot_module,
-    app/view/dynamite_plot_module,
     # Import shiny modules here
   )
 )

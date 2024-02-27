@@ -16,7 +16,10 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/plotter[plot_dynamite],
+    app/logic/plotter[plot_violin, ],
+    app/logic/shiny_helpers[
+      update_var_select_input, get_true_false_choices
+    ],
     app/logic/database_manager,
     app/logic/data_processor[process_data],
     # Import function modules here
@@ -42,9 +45,19 @@ ui <- function(id) {
   bslib$layout_sidebar(
     sidebar = bslib$sidebar(
       position = "left",
-      numericInput(
-        ns("bar_width"), label = "Bar Width",
-        value = 0.3, min = 0.01, max = 0.99, step = 0.1
+      selectInput(
+        ns("x_var"), "Select x variable :",
+        "", selectize = FALSE,
+      ),
+      selectInput(
+        ns("y_var"), "Select y variable :",
+        "", multiple = FALSE, selectize = FALSE,
+      ),
+      selectInput(
+        ns("trim"), label = "Trim ?",
+        choices = get_true_false_choices(),
+        selected = get_true_false_choices()[["No"]],
+        selectize = FALSE
       ),
       source_code_module$ui(ns("source_code_module")),
     ),
@@ -53,36 +66,34 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, selected_variable, app_database_manager) {
+server <- function(id, selected_data, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
     module_reactive_values <- reactiveValues(
       dataset = NULL,
     )
 
-    tryCatch({
-      module_reactive_values$dataset <- shinymeta$metaReactive({
-        app_database_manager %>%
-          database_manager$read_table_from_db(
-            table_name = "iris"
-          ) %>%
-          process_data() %>%
-          dplyr$mutate(
-            sepal_length_multiply_100 = Sepal.Length * 100
-          )
-      }, varname = "data")
-    }, finally = {
-      rlang$inform("Fetched data for Dynamite Module!")
+    observeEvent(selected_data(), {
+
+      update_var_select_input(
+        inputId = "x_var", selected_data(), session = session
+      )
+      update_var_select_input(
+        inputId = "y_var", selected_data(),
+        session = session
+      )
     })
 
     output$dynamite_plot <- shinymeta$metaRender2(renderPlot, {
-      req(class(module_reactive_values$dataset()[[selected_variable()]]) == "numeric")
+      req(input$x_var)
+      req(input$y_var)
 
       shinymeta$metaExpr({
-        ..(module_reactive_values$dataset()) %>%
-          plot_dynamite(
-            selected_variable = ..(selected_variable()),
-            bar_width = ..(input$bar_width)
+        ..(isolate(selected_data())) %>%
+          plot_violin(
+            x_var = ..(input$x_var),
+            y_var = ..(input$y_var),
+            trim = ..(input$trim)
           )
       })
     })

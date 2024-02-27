@@ -3,6 +3,7 @@ box::use(
   grDevices,
   echarts4r,
   jsonlite,
+  hexSticker,
 )
 
 #' @export
@@ -62,7 +63,7 @@ register_echarts_theme <- function(app_theme) {
 build_app_hex <- function(
     app_theme, hex_image = "app/static/images/hex_image.png",
     hex_output = "app/static/images/app_hex.png") {
-  hexSticker::sticker(
+  hexSticker$sticker(
     package = "meta7en",
     h_fill = app_theme$primary,
     p_color = app_theme$light,

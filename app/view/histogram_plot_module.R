@@ -16,7 +16,8 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/plotter[plot_histogram],
+    app/logic/plotter[plot_histogram, ],
+    app/logic/shiny_helpers[update_var_select_input],
     app/logic/database_manager,
     app/logic/data_processor[process_data],
     # Import function modules here
@@ -42,8 +43,16 @@ ui <- function(id) {
   bslib$layout_sidebar(
     sidebar = bslib$sidebar(
       position = "right",
+      selectInput(
+        ns("x_var"), "Select x variable :",
+        "", selectize = FALSE,
+      ),
+      selectInput(
+        ns("fill_var"), "Select fill variable :",
+        "", multiple = FALSE, selectize = FALSE
+      ),
       numericInput(
-        ns("plot_transparency"), label = "Transparency",
+        ns("plot_transparency"), label = "Transparency :",
         value = 0.3, min = 0.01, max = 0.99, step = 0.1
       ),
       source_code_module$ui(ns("source_code_module")),
@@ -53,42 +62,35 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, selected_variable, app_database_manager) {
+server <- function(id, selected_data, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
     module_reactive_values <- reactiveValues(
       dataset = NULL,
     )
 
-    tryCatch({
-      shinymeta$metaExpr({
-        sql_script <- app_database_manager %>%
-          database_manager$get_script_from_sql_file(
-            sql_file_path = file.path("app", "sql", "get_table.sql"),
-            table_name = "iris"
-          )
-      })
-      module_reactive_values$dataset <- shinymeta$metaReactive({
-        app_database_manager %>%
-          database_manager$get_query_command(
-            sql_script = sql_script
-          ) %>%
-          process_data() %>%
-          dplyr$mutate(
-            sepal_length_multiply_100 = Sepal.Length * 100
-          )
-      }, varname = "data")
-    }, finally = {
-      rlang$inform("Fetched data for Histogram Module!")
+    observeEvent(selected_data(), {
+      update_var_select_input(
+        inputId = "x_var", selected_data(),
+        allowed_col_types = c("numeric", "integer"), session = session
+      )
+      update_var_select_input(
+        inputId = "fill_var", selected_data(),
+        allowed_col_types = c("factor", "character"),
+        preffix_choices = list(
+          None = ""
+        ), session = session
+      )
     })
 
     output$density_plot <- shinymeta$metaRender2(renderPlot, {
-      req(class(module_reactive_values$dataset()[[selected_variable()]]) == "numeric")
+      req(input$x_var)
 
       shinymeta$metaExpr({
-        ..(module_reactive_values$dataset()) %>%
+        ..(isolate(selected_data())) %>%
           plot_histogram(
-            selected_variable = ..(selected_variable()),
+            x_var = ..(input$x_var),
+            fill_var = ..(input$fill_var),
             plot_transparency = ..(input$plot_transparency)
           )
       })

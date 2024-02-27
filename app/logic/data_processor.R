@@ -18,10 +18,7 @@ process_data <- function(data) {
 #' @export
 get_valid_data_names <- function(datasets = datasets) {
   purrr$map_chr(names(datasets), function(data_name) {
-    if (all(class(datasets[[data_name]]) == "data.frame") &
-          data_name %in% c("iris", "OrchardSprays", "infert"))
-      data_name
-    else if (data_name %in% c("EuStockMarkets"))
+    if (all(class(datasets[[data_name]]) == "data.frame"))
       data_name
     else
       NA
