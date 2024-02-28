@@ -12,7 +12,6 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
     app/logic/plotter[plot_violin, ],
     app/logic/shiny_helpers[
       update_var_select_input, get_true_false_choices
@@ -62,7 +61,7 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, selected_data, app_database_manager) {
+server <- function(id, selected_data) {
   moduleServer(id, function(input, output, session) {
 
     # Initialize reactive values to be used in this module here

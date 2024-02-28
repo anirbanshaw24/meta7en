@@ -13,7 +13,7 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
+    app/logic/database_manager[read_table_from_db, ],
     app/logic/plotter[plot_histogram],
     app/logic/data_processor[process_data],
     # Import function modules here
@@ -92,7 +92,7 @@ server <- function(id, app_database_manager) {
       req(data_name$data_name())
       metaExpr({
         app_database_manager %>%
-          database_manager$read_table_from_db(
+          read_table_from_db(
             ..(data_name$data_name())
           )
       })

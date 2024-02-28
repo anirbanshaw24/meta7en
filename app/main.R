@@ -22,7 +22,9 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
+    app/logic/database_manager[
+      database_manager, write_table_to_db, disconnect_database,
+    ],
     app/logic/data_processor[get_valid_data_names],
     app/logic/app_utils[
       get_db_setup_code, get_n_colors,
@@ -149,7 +151,6 @@ ui <- function(id) {
       )
     )
   )
-
 }
 
 #' @export
@@ -183,12 +184,12 @@ server <- function(id) {
     # DB is disconnected and shut down!
     onSessionEnded(function() {
       app_database_manager %>%
-        database_manager$disconnect_database()
+        disconnect_database()
     })
     # Make sure DB is disconnected and shut down!
     onStop(function() {
       app_database_manager %>%
-        database_manager$disconnect_database()
+        disconnect_database()
     })
   })
 }

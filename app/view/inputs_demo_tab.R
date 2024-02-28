@@ -15,7 +15,6 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
     # Import function modules here
   )
 )

@@ -23,7 +23,7 @@ get_db_setup_code <- function() {
     app_config <- get(config = Sys.getenv("ENVIRONMENT"))
 
     "# Create new database_manager object"
-    app_database_manager <- database_manager$database_manager(
+    app_database_manager <- database_manager(
       db_config = app_config$database,
       db_driver = duckdb()
     )
@@ -31,7 +31,7 @@ get_db_setup_code <- function() {
     "# Write dataframes from datasets to duckdb"
     walk(get_valid_data_names(datasets = datasets), function(dataset) {
       app_database_manager %>%
-        database_manager$write_table_to_db(
+        write_table_to_db(
           table_name = dataset,
           dataset = datasets[[dataset]] %>%
             as.data.frame()
