@@ -77,7 +77,9 @@ build_app_hex(app_theme)
 ui <- function(id) {
   ns <- NS(id)
 
-  main_page_constants <- get(file = file.path("constants", "main_page_constants.yml"))
+  main_page_constants <- get(
+    file = file.path("constants", "main_page_constants.yml")
+  )
 
   page_navbar(
     id = ns("main_page_navbar"),
