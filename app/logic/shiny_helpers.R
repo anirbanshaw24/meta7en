@@ -1,6 +1,6 @@
 box::use(
-  magrittr[`%>%`, ],
   shiny[...],
+  magrittr[`%>%`, ],
 )
 
 box::use(

@@ -20,16 +20,16 @@ date_time_filename <- function(
 get_db_setup_code <- function() {
   quote({
     "# Get app config"
-    app_config <- config$get(config = Sys.getenv("ENVIRONMENT"))
+    app_config <- get(config = Sys.getenv("ENVIRONMENT"))
 
     "# Create new database_manager object"
     app_database_manager <- database_manager$database_manager(
       db_config = app_config$database,
-      db_driver = duckdb$duckdb()
+      db_driver = duckdb()
     )
 
     "# Write dataframes from datasets to duckdb"
-    purrr$walk(get_valid_data_names(datasets = datasets), function(dataset) {
+    walk(get_valid_data_names(datasets = datasets), function(dataset) {
       app_database_manager %>%
         database_manager$write_table_to_db(
           table_name = dataset,

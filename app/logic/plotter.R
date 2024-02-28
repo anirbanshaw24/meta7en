@@ -1,11 +1,11 @@
 box::use(
+  ggplot2[...],
+  echarts4r[...],
   magrittr[`%>%`, ],
+  rlang[sym, ],
   datasets,
-  ggplot2,
-  rlang,
-  echarts4r,
-  dplyr,
-  purrr,
+  dplyr[mutate, n, ],
+  purrr[keep, ],
 )
 
 #' @export
@@ -14,7 +14,7 @@ get_type_columns <- function(data, column_types) {
     return(NULL)
   data %>%
     colnames() %>%
-    purrr$keep(function(x) {
+    keep(function(x) {
       any(class(data[[x]]) %in% column_types)
     })
 }
@@ -47,9 +47,9 @@ plot_histogram <- function(
     fill_var = get_factor_columns(data)[1], color_var = NULL,
     plot_transparency = 0.3, ...) {
 
-  ggplot2$ggplot(data = data) +
-    ggplot2$aes(x = !!rlang$sym(x_var), fill = !!rlang$sym(fill_var)) +
-    ggplot2$geom_density(alpha = plot_transparency)
+  ggplot(data = data) +
+    aes(x = !!sym(x_var), fill = !!sym(fill_var)) +
+    geom_density(alpha = plot_transparency)
 }
 
 
@@ -66,11 +66,11 @@ plot_violin <- function(
     data = datasets$iris, x_var = get_factor_columns(data)[1],
     y_var = get_numeric_columns(data)[1], trim) {
 
-  ggplot2$ggplot(data = data) +
-    ggplot2$aes(
-      x = !!rlang$sym(x_var), y = !!rlang$sym(y_var)
+  ggplot(data = data) +
+    aes(
+      x = !!sym(x_var), y = !!sym(y_var)
     ) +
-    ggplot2$geom_violin(trim = trim)
+    geom_violin(trim = trim)
 }
 
 #' Plot echarts
@@ -86,15 +86,15 @@ line_plot_echarts <- function(
     y_var = get_numeric_columns(data)[2], group_var = NULL) {
   if (group_var != "") {
     data <- data %>%
-      echarts4r$group_by(!!rlang$sym(group_var))
+      group_by(!!sym(group_var))
   }
 
   data %>%
-    dplyr$mutate(row_num = seq_len(dplyr$n())) %>%
-    echarts4r$e_charts_(x_var) %>%
-    echarts4r$e_line_(y_var) %>%
-    echarts4r$e_y_axis(scale = TRUE) %>%
-    echarts4r$e_axis_labels(
+    mutate(row_num = seq_len(n())) %>%
+    e_charts_(x_var) %>%
+    e_line_(y_var) %>%
+    e_y_axis(scale = TRUE) %>%
+    e_axis_labels(
       x = x_var,
       y = y_var
     )
