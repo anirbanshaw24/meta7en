@@ -61,7 +61,7 @@ We are using { rhino }, but modified the structure to fit use cases of source co
 
 ### Docker
 
-This is work is progress.
+Coming soon.
 
 ## Additional Notes
 
