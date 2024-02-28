@@ -1,7 +1,7 @@
 default:
   primary: "#0f4c81"
   secondary: "#009473"
-  light: "#f6fffd"
+  light: "#fefffe"
   dark: "#002018"
   success: "#71cc51"
   info: "#0f4c81"
@@ -19,3 +19,5 @@ default:
     spacer: "0.5rem"
     accordion-body-padding-x: "0.5rem"
     accordion-body-padding-y: "0.5rem"
+    btn-padding-x: "0.5rem"
+    btn-padding-y: "0.5rem"

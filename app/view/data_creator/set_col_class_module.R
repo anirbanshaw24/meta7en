@@ -3,12 +3,11 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    reactable,
-    purrr,
-    glue,
+    magrittr[`%>%`, ],
+    bslib[card, card_body, card_header, ],
+    shinymeta[metaReactive2, metaReactive, metaExpr, ],
+    purrr[map, map_chr, walk, ],
+    glue[glue, ],
     # Import packages here
   )
 )
@@ -38,13 +37,13 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card_body(
-    bslib$card(
-      bslib$card_header("Current Variable Types"),
+  card_body(
+    card(
+      card_header("Current Variable Types"),
       reactable_module$ui(ns("reactable_module"))
     ),
-    bslib$card(
-      bslib$card_header("Change Variable Types"),
+    card(
+      card_header("Change Variable Types"),
       uiOutput(
         outputId = ns("set_column_classes"),
         fill  = TRUE
@@ -58,9 +57,12 @@ server <- function(id, dataset) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
+
     output$set_column_classes <- renderUI({
       req(dataset())
-      purrr$map(colnames(dataset()), function(colname) {
+      map(colnames(dataset()), function(colname) {
         div(
           class = "update_col_class",
           selectInput(
@@ -70,7 +72,7 @@ server <- function(id, dataset) {
               "Numeric" = "as.numeric",
               "String" = "as.character",
               "Categorical" = "as.factor"
-            ), selected = glue$glue(
+            ), selected = glue(
               "as.{class(dataset()[[colname]])}"
             )
           )
@@ -78,23 +80,23 @@ server <- function(id, dataset) {
       })
     })
 
-    col_class_set_data <- shinymeta$metaReactive2({
-      purrr$walk(colnames(dataset()), function(colname) {
+    col_class_set_data <- metaReactive2({
+      walk(colnames(dataset()), function(colname) {
         req(input[[make.names(colname)]])
       })
 
-      col_classses <- purrr$map_chr(colnames(dataset()), function(colname) {
+      col_classses <- map_chr(colnames(dataset()), function(colname) {
         input[[make.names(colname)]]
       })
 
-      shinymeta$metaExpr({
+      metaExpr({
 
         ..(dataset()) %>%
           set_col_classes(..(col_classses))
       })
     }, varname = "col_class_set_data")
 
-    col_types_data <- shinymeta$metaReactive({
+    col_types_data <- metaReactive({
       ..(col_class_set_data()) %>%
         get_col_types_df(reactive = FALSE)
     }, varname = "col_types_data")

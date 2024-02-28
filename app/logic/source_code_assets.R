@@ -1,8 +1,8 @@
 box::use(
-  purrr,
-  config,
-  magrittr[...],
-  rlang,
+  magrittr[`%>%`, ],
+  purrr[map, ],
+  config[get, ],
+  rlang[expr, ],
 )
 
 box::use(
@@ -10,20 +10,20 @@ box::use(
 )
 
 # Import source code generation config
-source_code_config <- config$get(file = "app/source_code_assets/source_code_config.yml")
+source_code_config <- get(file = "app/source_code_assets/source_code_config.yml")
 
 #' @export
 get_source_code_preffix <- function(packages_code, modules_code) {
 
   db_setup_code <- get_db_setup_code()
 
-  rlang$expr({
+  expr({
 
     "# Import packages"
     box::use(
-      config,
-      duckdb,
-      purrr,
+      config[get, ],
+      duckdb[duckdb, ],
+      purrr[walk, ],
       datasets,
       # Import packages here
     )
@@ -58,10 +58,10 @@ source_code_begin_comment <- "# Source Code of Interest"
 get_common_files_to_include <- function(
     common_files_to_include = source_code_config$common_files) {
 
-  files_list <- purrr$map(common_files_to_include, function(file) {
+  files_list <- map(common_files_to_include, function(file) {
     do.call(file.path, as.list(file$app_code))
   })
-  names(files_list) <- purrr$map(common_files_to_include, function(file) {
+  names(files_list) <- map(common_files_to_include, function(file) {
     do.call(file.path, as.list(file$source_code))
   })
 
@@ -73,7 +73,7 @@ get_app_files_to_include <- function(dirs_to_scan = c("app/logic", "app/sql")) {
 
   full_file_paths <- as.list(
     unlist(
-      purrr$map(dirs_to_scan, function(dir) {
+      map(dirs_to_scan, function(dir) {
         list.files(dir, recursive = TRUE, full.names = TRUE)
       })
     )
@@ -88,7 +88,7 @@ get_db_setup_files_include <- function(dirs_to_scan = c("db_setup/")) {
 
   full_file_paths <- as.list(
     unlist(
-      purrr$map(dirs_to_scan, function(dir) {
+      map(dirs_to_scan, function(dir) {
         list.files(dir, recursive = TRUE, full.names = TRUE)
       })
     )

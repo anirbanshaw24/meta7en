@@ -2,10 +2,9 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    config,
+    magrittr[`%>%`, ],
+    bslib[page_fluid, card, card_image, card_body, ],
+    config[get, ],
     # Import packages here
   )
 )
@@ -28,7 +27,7 @@ eval(packages_code)
 eval(function_modules_code)
 eval(shiny_modules_code)
 
-welcome_page_constants <- config$get(
+welcome_page_constants <- get(
   file = file.path("constants", "page_constants", "welcome_page.yml")
 )
 
@@ -36,17 +35,17 @@ welcome_page_constants <- config$get(
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$page_fluid(
-    bslib$card(
+  page_fluid(
+    card(
       class = "welcome-page",
       height = "75vh",
-      bslib$card(
-        bslib$card_image(
+      card(
+        card_image(
           class = "align-self-center",
           welcome_page_constants$image_path,
           fill = FALSE, width = "1300px"
         ),
-        bslib$card_body(
+        card_body(
           class = "welcome-text",
           h1(
             welcome_page_constants$text_header

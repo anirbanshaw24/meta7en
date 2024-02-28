@@ -2,15 +2,12 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
+    shinyWidgets[...],
+    magrittr[`%>%`, ],
+    bslib[card, page_sidebar, sidebar, accordion, accordion_panel, tooltip, ],
     datasets,
-    ggplot2,
-    bsicons,
-    brio,
-    shinyWidgets,
-    stats,
+    bsicons[bs_icon, ],
+    stats[setNames, ],
     # Import packages here
   )
 )
@@ -18,7 +15,6 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
     # Import function modules here
   )
 )
@@ -26,8 +22,6 @@ function_modules_code <- quote(
 # Shiny Modules
 shiny_modules_code <- quote(
   box::use(
-    app/view/histogram_plot_module,
-    app/view/dynamite_plot_module,
     # Import shiny modules here
   )
 )
@@ -51,16 +45,16 @@ cities <- data.frame(
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card(
-    bslib$page_sidebar(
-      sidebar = bslib$sidebar(
+  card(
+    page_sidebar(
+      sidebar = sidebar(
         width = "50vw",
-        bslib$accordion(
+        accordion(
           multiple = FALSE,
-          bslib$accordion_panel(
-            "Some Inputs", icon = bsicons$bs_icon("menu-app"),
+          accordion_panel(
+            "Some Inputs", icon = bs_icon("menu-app"),
 
-            shinyWidgets$pickerInput(
+            pickerInput(
               ns("picker_input"), label = "Picker Input",
               choices = list(
                 a = list(
@@ -74,7 +68,7 @@ ui <- function(id) {
               ), multiple  = TRUE, autocomplete = TRUE
             ),
 
-            shinyWidgets$multiInput(
+            multiInput(
               ns("multi_input"), label = "Multi Input",
               choices = list(
                 f = 3,
@@ -84,7 +78,7 @@ ui <- function(id) {
               )
             ),
 
-            shinyWidgets$multiInput(
+            multiInput(
               ns("multi_input"), label = "Multi Input",
               choices = list(
                 f = 3,
@@ -94,38 +88,38 @@ ui <- function(id) {
               )
             ),
 
-            shinyWidgets$airDatepickerInput(
+            airDatepickerInput(
               inputId = "multiple",
               label = "Select multiple dates:",
               placeholder = "You can pick 5 dates",
               multiple = 5, clearButton = TRUE
             ),
 
-            shinyWidgets$airDatepickerInput(
+            airDatepickerInput(
               inputId = "multiple",
               label = "Select multiple dates:",
               placeholder = "You can pick 5 dates",
               multiple = 5, clearButton = TRUE
             ),
 
-            shinyWidgets$airDatepickerInput(
+            airDatepickerInput(
               inputId = "multiple",
               label = "Select multiple dates:",
               placeholder = "You can pick 5 dates",
               multiple = 5, clearButton = TRUE
             ),
-            shinyWidgets$airDatepickerInput(
+            airDatepickerInput(
               inputId = "multiple",
               label = "Select multiple dates:",
               placeholder = "You can pick 5 dates",
               multiple = 5, clearButton = TRUE
             ),
-            shinyWidgets$autonumericInput(
+            autonumericInput(
               inputId = "id1",
               label = "Default Input",
               value = 1234.56
             ),
-            shinyWidgets$autonumericInput(
+            autonumericInput(
               inputId = "id2",
               label = "Custom Thousands of Dollars Input",
               value = 1234.56,
@@ -137,7 +131,7 @@ ui <- function(id) {
               divisorWhenUnfocused = 1000,
               symbolWhenUnfocused = "K"
             ),
-            shinyWidgets$autonumericInput(
+            autonumericInput(
               inputId = "id3",
               label = "Custom Millions of Euros Input with Positive Sign",
               value = 12345678910,
@@ -150,47 +144,47 @@ ui <- function(id) {
               symbolWhenUnfocused = " (millions)",
               showPositiveSign = TRUE
             ),
-            shinyWidgets$awesomeCheckbox(
+            awesomeCheckbox(
               inputId = "somevalue",
               label = "A single checkbox",
               value = TRUE
             ),
-            shinyWidgets$awesomeCheckboxGroup(
+            awesomeCheckboxGroup(
               inputId = "id2", label = "Make a choice:",
               choices = c("base", "dplyr", "data.table"),
               inline = TRUE
             ),
-            shinyWidgets$awesomeRadio(
+            awesomeRadio(
               inputId = "id2", label = "Make a choice:",
               choices = c("base", "dplyr", "data.table"),
               inline = TRUE
             ),
-            shinyWidgets$checkboxGroupButtons(
+            checkboxGroupButtons(
               inputId = "somevalue2",
               label = "With custom status:",
               choices = names(datasets$iris),
               status = "primary"
             ),
-            shinyWidgets$noUiSliderInput(
+            noUiSliderInput(
               "obs2", "Customized range slider:",
               min = 0, max = 100, value = c(40, 80)
             ),
-            shinyWidgets$colorSelectorInput(
+            colorSelectorInput(
               inputId = "mycolor1", label = "Pick a color :",
               choices = c("steelblue", "cornflowerblue",
                           "firebrick", "palegoldenrod",
                           "forestgreen")
             ),
-            shinyWidgets$currencyInput(
+            currencyInput(
               "id2", "Dollar:", value = 1234,
               format = "dollar", width = 200, align = "right"
             ),
-            shinyWidgets$formatNumericInput(
+            formatNumericInput(
               "id5", "Percent:", value = 1234,
               width = 200, format = "percentageEU2dec"
             ),
-            shinyWidgets$actionBttn("btn_text", "Text Input"),
-            shinyWidgets$knobInput(
+            actionBttn("btn_text", "Text Input"),
+            knobInput(
               inputId = "myKnob",
               label = "Display previous:",
               value = 50,
@@ -199,7 +193,7 @@ ui <- function(id) {
               fgColor = "#428BCA",
               inputColor = "#428BCA"
             ),
-            shinyWidgets$multiInput(
+            multiInput(
               inputId = "id", label = "Fruits :",
               choices = c("Banana", "Blueberry", "Cherry",
                           "Coconut", "Grapefruit", "Kiwi",
@@ -212,55 +206,55 @@ ui <- function(id) {
                 selected_header = "You have selected:"
               )
             ),
-            shinyWidgets$noUiSliderInput(
+            noUiSliderInput(
               inputId = "noui2", label = "Slider vertical:",
               min = 0, max = 1000, step = 50,
               value = c(100, 400), margin = 100,
               orientation = "vertical",
               width = "100px", height = "300px"
             ),
-            shinyWidgets$numericInputIcon(
+            numericInputIcon(
               inputId = "ex5",
               label = "Sizing",
               value = 10000,
               icon = list(icon("dollar-sign"), ".00"),
               size = "lg"
             ),
-            shinyWidgets$numericRangeInput(
+            numericRangeInput(
               inputId = "my_id", label = "Numeric Range Input:",
               value = c(100, 400)
             ),
-            shinyWidgets$searchInput(
+            searchInput(
               inputId = "search", label = "Enter your text",
               placeholder = "A placeholder",
               btnSearch = icon("magnifying-glass"),
               btnReset = icon("xmark"),
               width = "450px"
             ),
-            shinyWidgets$sliderTextInput(
+            sliderTextInput(
               inputId = "mySliderText",
               label = "Month range slider:",
               choices = month.name,
               selected = month.name[c(4, 7)]
             ),
-            shinyWidgets$switchInput(inputId = "somevalue"),
-            shinyWidgets$textInputIcon(
+            switchInput(inputId = "somevalue"),
+            textInputIcon(
               inputId = "ex3",
               label = "With text",
               icon = list("https://")
             ),
-            shinyWidgets$treeInput(
+            treeInput(
               inputId = "ID3",
               label = "Select cities:",
-              choices = shinyWidgets$create_tree(cities),
+              choices = create_tree(cities),
               selected = c("San Francisco", "Monastir"),
               returnValue = "text",
               closeDepth = 2
             ),
-            shinyWidgets$virtualSelectInput(
+            virtualSelectInput(
               inputId = "multiple",
               label = "Multiple select:",
-              choices = stats$setNames(month.abb, month.name),
+              choices = setNames(month.abb, month.name),
               multiple = TRUE
             ),
 
@@ -292,10 +286,10 @@ ui <- function(id) {
               "Checkbox Input"
             )
           ),
-          bslib$accordion_panel(
-            "Some More Inputs", icon = bsicons$bs_icon("sliders"),
+          accordion_panel(
+            "Some More Inputs", icon = bs_icon("sliders"),
             numericInput(ns("bins"), "Number of bins", 30) %>%
-              bslib$tooltip("Tooltip message"),
+              tooltip("Tooltip message"),
             passwordInput(
               ns("password_input"),
               "Password Input"
@@ -317,7 +311,7 @@ ui <- function(id) {
           )
         )
       ),
-      bslib$card(
+      card(
         full_screen = TRUE
       )
     )

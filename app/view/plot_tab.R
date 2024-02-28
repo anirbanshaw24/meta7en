@@ -2,14 +2,10 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    datasets,
-    ggplot2,
-    bsicons,
-    brio,
-    rlang,
+    magrittr[`%>%`, ],
+    bslib[layout_sidebar, sidebar, accordion, accordion_panel, card, ],
+    shinymeta[metaReactive2, metaExpr, ],
+    bsicons[bs_icon, ],
     # Import packages here
   )
 )
@@ -17,7 +13,7 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/database_manager,
+    app/logic/database_manager[read_table_from_db, ],
     # Import function modules here
   )
 )
@@ -26,8 +22,9 @@ function_modules_code <- quote(
 shiny_modules_code <- quote(
   box::use(
     app/view/histogram_plot_module,
-    app/view/dynamite_plot_module,
+    app/view/violin_plot_module,
     app/view/echarts_plot_module,
+    app/view/data_creator/select_data_module,
     # Import shiny modules here
   )
 )
@@ -40,46 +37,45 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card(
-    bslib$page_sidebar(
-      sidebar = bslib$sidebar(
-        bslib$accordion(
-          multiple = FALSE,
-          bslib$accordion_panel(
-            "User Inputs", icon = bsicons$bs_icon("menu-app"),
-            selectInput(
-              ns("var"), "Select variable",
-              NULL
-            )
-          )
+  layout_sidebar(
+    sidebar = sidebar(
+      id = ns("plot_tab_sidebar"),
+      accordion(
+        multiple = FALSE,
+        accordion_panel(
+          id = ns("plot_tab_sidebar_accordion"),
+          value = "select_data",
+          "User Inputs", icon = bs_icon("menu-app"),
+          select_data_module$ui(ns("select_data_module")),
+        )
+      )
+    ),
+    accordion(
+      id = ns("plot_tab_main_accordion"),
+      open = c("Density Plot"),
+      multiple = FALSE,
+      accordion_panel(
+        "Density Plot",
+        card(
+          height = "60vh",
+          histogram_plot_module$ui(ns("histogram_plot_module")),
+          full_screen = TRUE
         )
       ),
-      bslib$accordion(
-        open = c("echarts Plot"),
-        multiple = FALSE,
-        bslib$accordion_panel(
-          "Density Plot",
-          bslib$card(
-            height = "60vh",
-            histogram_plot_module$ui(ns("histogram_plot_module")),
-            full_screen = TRUE
-          )
-        ),
-        bslib$accordion_panel(
-          "Dynamite Plot",
-          bslib$card(
-            height = "60vh",
-            dynamite_plot_module$ui(ns("dynamite_plot_module")),
-            full_screen = TRUE
-          )
-        ),
-        bslib$accordion_panel(
-          "echarts Plot",
-          bslib$card(
-            height = "60vh",
-            echarts_plot_module$ui(ns("echarts_plot")),
-            full_screen = TRUE
-          )
+      accordion_panel(
+        "Violin Plot",
+        card(
+          height = "60vh",
+          violin_plot_module$ui(ns("violin_plot_module")),
+          full_screen = TRUE
+        )
+      ),
+      accordion_panel(
+        "echarts Plot",
+        card(
+          height = "60vh",
+          echarts_plot_module$ui(ns("echarts_plot")),
+          full_screen = TRUE
         )
       )
     )
@@ -90,45 +86,31 @@ ui <- function(id) {
 server <- function(id, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      # Initialize reactive values to be used in this module here
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
-    tryCatch({
-      sql_script <- app_database_manager %>%
-        database_manager$get_script_from_sql_file(
-          file.path("app", "sql", "get_data_header.sql"),
-          table_name = "iris"
-        )
-      data_colnames <- app_database_manager %>%
-        database_manager$get_query_command(
-          sql_script = sql_script
-        )
-      module_reactive_values$data_colnames <- data_colnames[["column_name"]]
-    }, finally = {
-      rlang$inform("Fetched data for Plot tab!")
-    })
+    data_name <- select_data_module$server("select_data_module")
 
-    observeEvent(module_reactive_values$data_colnames, {
-      updateSelectInput(
-        inputId = "var", choices = module_reactive_values$data_colnames
-      )
-    })
+    selected_data <- metaReactive2({
+      req(data_name$data_name())
+      metaExpr({
+        app_database_manager %>%
+          read_table_from_db(
+            ..(data_name$data_name())
+          )
+      })
+    }, varname = "selected_data")
 
     histogram_plot_module$server(
-      "histogram_plot_module", selected_variable = reactive({
-        input$var
-      }),
-      app_database_manager = app_database_manager
+      "histogram_plot_module", selected_data = selected_data
     )
 
-    dynamite_plot_module$server(
-      "dynamite_plot_module", selected_variable = reactive({
-        input$var
-      }),
-      app_database_manager = app_database_manager
+    violin_plot_module$server(
+      "violin_plot_module", selected_data = selected_data
     )
 
-    echarts_plot_module$server("echarts_plot", app_database_manager)
+    echarts_plot_module$server(
+      "echarts_plot", selected_data = selected_data
+    )
   })
 }

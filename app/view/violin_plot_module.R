@@ -12,8 +12,10 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
-    app/logic/plotter[plot_histogram, ],
-    app/logic/shiny_helpers[update_var_select_input],
+    app/logic/plotter[plot_violin, ],
+    app/logic/shiny_helpers[
+      update_var_select_input, get_true_false_choices
+    ],
     app/logic/data_processor[process_data],
     # Import function modules here
   )
@@ -37,22 +39,24 @@ ui <- function(id) {
 
   layout_sidebar(
     sidebar = sidebar(
-      position = "right",
+      position = "left",
       selectInput(
         ns("x_var"), "Select x variable :",
         "", selectize = FALSE,
       ),
       selectInput(
-        ns("fill_var"), "Select fill variable :",
-        "", multiple = FALSE, selectize = FALSE
+        ns("y_var"), "Select y variable :",
+        "", multiple = FALSE, selectize = FALSE,
       ),
-      numericInput(
-        ns("plot_transparency"), label = "Transparency :",
-        value = 0.3, min = 0.01, max = 0.99, step = 0.1
+      selectInput(
+        ns("trim"), label = "Trim ?",
+        choices = get_true_false_choices(),
+        selected = get_true_false_choices()[["No"]],
+        selectize = FALSE
       ),
       source_code_module$ui(ns("source_code_module")),
     ),
-    plotOutput(ns("density_plot"))
+    plotOutput(ns("dynamite_plot"))
   )
 }
 
@@ -64,34 +68,32 @@ server <- function(id, selected_data) {
     module_reactive_values <- reactiveValues()
 
     observeEvent(selected_data(), {
+
       update_var_select_input(
-        input_id = "x_var", selected_data(),
-        allowed_col_types = c("numeric", "integer"), session = session
+        input_id = "x_var", selected_data(), session = session
       )
       update_var_select_input(
-        input_id = "fill_var", selected_data(),
-        allowed_col_types = c("factor", "character"),
-        preffix_choices = list(
-          None = ""
-        ), session = session
+        input_id = "y_var", selected_data(),
+        session = session
       )
     })
 
-    output$density_plot <- metaRender2(renderPlot, {
+    output$dynamite_plot <- metaRender2(renderPlot, {
       req(input$x_var)
+      req(input$y_var)
 
       metaExpr({
         ..(isolate(selected_data())) %>%
-          plot_histogram(
+          plot_violin(
             x_var = ..(input$x_var),
-            fill_var = ..(input$fill_var),
-            plot_transparency = ..(input$plot_transparency)
+            y_var = ..(input$y_var),
+            trim = ..(input$trim)
           )
       })
     })
 
     source_code_module$server(
-      "source_code_module", output$density_plot,
+      "source_code_module", output$dynamite_plot,
       packages = packages_code,
       modules = function_modules_code
     )

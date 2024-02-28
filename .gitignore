@@ -2,9 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+.Renviron
 
 shiny_bookmarks
 rsconnect
 README.txt
 
 *.DS_Store
+README.html
