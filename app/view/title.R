@@ -3,8 +3,6 @@ packages_code <- quote(
   box::use(
     shiny[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
     # Import packages here
   )
 )

@@ -3,13 +3,9 @@ packages_code <- quote(
   box::use(
     shiny[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
-    datasets,
-    ggplot2,
-    bsicons,
-    brio,
-    rlang,
+    bslib[layout_sidebar, sidebar, accordion, accordion_panel, card, ],
+    shinymeta[metaReactive2, metaExpr, ],
+    bsicons[bs_icon, ],
     # Import packages here
   )
 )
@@ -41,42 +37,42 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$layout_sidebar(
-    sidebar = bslib$sidebar(
+  layout_sidebar(
+    sidebar = sidebar(
       id = ns("plot_tab_sidebar"),
-      bslib$accordion(
+      accordion(
         multiple = FALSE,
-        bslib$accordion_panel(
+        accordion_panel(
           id = ns("plot_tab_sidebar_accordion"),
           value = "select_data",
-          "User Inputs", icon = bsicons$bs_icon("menu-app"),
+          "User Inputs", icon = bs_icon("menu-app"),
           select_data_module$ui(ns("select_data_module")),
         )
       )
     ),
-    bslib$accordion(
+    accordion(
       id = ns("plot_tab_main_accordion"),
       open = c("Density Plot"),
       multiple = FALSE,
-      bslib$accordion_panel(
+      accordion_panel(
         "Density Plot",
-        bslib$card(
+        card(
           height = "60vh",
           histogram_plot_module$ui(ns("histogram_plot_module")),
           full_screen = TRUE
         )
       ),
-      bslib$accordion_panel(
+      accordion_panel(
         "Violin Plot",
-        bslib$card(
+        card(
           height = "60vh",
           violin_plot_module$ui(ns("violin_plot_module")),
           full_screen = TRUE
         )
       ),
-      bslib$accordion_panel(
+      accordion_panel(
         "echarts Plot",
-        bslib$card(
+        card(
           height = "60vh",
           echarts_plot_module$ui(ns("echarts_plot")),
           full_screen = TRUE
@@ -95,9 +91,9 @@ server <- function(id, app_database_manager) {
 
     data_name <- select_data_module$server("select_data_module")
 
-    selected_data <- shinymeta$metaReactive2({
+    selected_data <- metaReactive2({
       req(data_name$data_name())
-      shinymeta$metaExpr({
+      metaExpr({
         app_database_manager %>%
           database_manager$read_table_from_db(
             ..(data_name$data_name())

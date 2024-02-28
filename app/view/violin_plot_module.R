@@ -3,12 +3,8 @@ packages_code <- quote(
   box::use(
     shiny[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
-    brio,
-    bsicons,
-    dplyr,
-    rlang,
+    bslib[layout_sidebar, sidebar, ],
+    shinymeta[metaRender2, metaExpr, ],
     # Import packages here
   )
 )
@@ -42,8 +38,8 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$layout_sidebar(
-    sidebar = bslib$sidebar(
+  layout_sidebar(
+    sidebar = sidebar(
       position = "left",
       selectInput(
         ns("x_var"), "Select x variable :",
@@ -83,11 +79,11 @@ server <- function(id, selected_data, app_database_manager) {
       )
     })
 
-    output$dynamite_plot <- shinymeta$metaRender2(renderPlot, {
+    output$dynamite_plot <- metaRender2(renderPlot, {
       req(input$x_var)
       req(input$y_var)
 
-      shinymeta$metaExpr({
+      metaExpr({
         ..(isolate(selected_data())) %>%
           plot_violin(
             x_var = ..(input$x_var),

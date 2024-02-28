@@ -2,12 +2,9 @@
 packages_code <- quote(
   box::use(
     shiny[...],
+    shinymeta[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
-    datasets,
-    brio,
-    bsicons,
+    bslib[card, card_body, ],
     # Import packages here
   )
 )
@@ -19,7 +16,7 @@ function_modules_code <- quote(
       files_to_include, rendering_arguments, source_code_begin_comment,
       get_source_code_suffix, get_source_code_preffix
     ],
-    app/logic/app_utils,
+    app/logic/app_utils[date_time_filename, ],
     # Import function modules here
   )
 )
@@ -39,7 +36,7 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card_body(
+  card_body(
     actionButton(ns("view_code"), "View Code", icon("code")),
     downloadButton(ns("download_code"), "Reproducible ZIP")
   )
@@ -53,7 +50,7 @@ server <- function(id, output_to_trace, packages, modules) {
     module_reactive_values <- reactiveValues()
 
     observeEvent(input$view_code, {
-      source_code <- shinymeta$expandChain(
+      source_code <- expandChain(
         get_source_code_preffix(packages, modules),
         source_code_begin_comment,
         output_to_trace(),
@@ -61,7 +58,7 @@ server <- function(id, output_to_trace, packages, modules) {
       )
 
       module_reactive_values$source_code <- source_code
-      shinymeta$displayCodeModal(
+      displayCodeModal(
         module_reactive_values$source_code,
         title = "Code",
         size = "l",
@@ -80,14 +77,14 @@ server <- function(id, output_to_trace, packages, modules) {
 
     output$download_code <- downloadHandler(
       filename = function() {
-        app_utils$date_time_filename("source_code_bundle")
+        date_time_filename("source_code_bundle")
       },
       content = function(file) {
 
         if (Sys.getenv("ENVIRONMENT") != "dev") {
           showModal(
             modalDialog(
-              bslib$card(
+              card(
                 h2("Not Allowed"),
                 passwordInput(
                   ns("set_environment"), label = NULL,
@@ -102,14 +99,14 @@ server <- function(id, output_to_trace, packages, modules) {
           return()
         } else {
           Sys.setenv(ENVIRONMENT = "shinyapps")
-          ec <- shinymeta$newExpansionContext()
+          ec <- newExpansionContext()
 
-          shinymeta$buildRmdBundle(
+          buildRmdBundle(
             file.path("app", "reports", "source_code_report.Rmd"),
             file,
             render = TRUE,
             vars = list(
-              shinymeta_code = shinymeta$expandChain(
+              shinymeta_code = expandChain(
                 get_source_code_preffix(packages, modules),
                 source_code_begin_comment,
                 output_to_trace(),
