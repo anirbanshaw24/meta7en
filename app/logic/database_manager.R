@@ -35,7 +35,7 @@ database_manager <- new_class(
       password = Sys.getenv(db_password_env_var),
       maxSize = 5
     )
-    rlang$inform("DB Connected.")
+    rlang$inform("DB connected.")
     new_object(
       S7_object(),
       db_config = db_config, db_password_env_var = db_password_env_var,
