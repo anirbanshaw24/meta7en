@@ -63,15 +63,18 @@ thematic_shiny(
   bg = app_theme$light,
   fg = app_theme$dark,
   accent = app_theme$secondary,
-  qualitative = get_n_colors(app_theme$primary, app_theme$success, n = 3),
+  qualitative = get_n_colors(
+    app_theme$secondary, app_theme$success, app_theme$warning,
+    app_theme$danger, app_theme$brand_colors$light_purple,
+    app_theme$brand_colors$dark_purple, app_theme$primary,
+    n = 12
+  ),
   font = font_spec(
     scale = 1.75
   )
 )
 
 enableBookmarking(store = app_config$bookmark_location)
-
-build_app_hex(app_theme)
 
 #' @export
 ui <- function(id) {
