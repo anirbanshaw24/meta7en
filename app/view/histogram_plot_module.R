@@ -65,9 +65,8 @@ ui <- function(id) {
 server <- function(id, selected_data, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      dataset = NULL,
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
     observeEvent(selected_data(), {
       update_var_select_input(

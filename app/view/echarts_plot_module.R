@@ -2,14 +2,10 @@
 packages_code <- quote(
   box::use(
     shiny[...],
+    echarts4r[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
-    brio,
-    bsicons,
-    dplyr,
-    rlang,
-    echarts4r,
+    bslib[layout_sidebar, sidebar, ],
+    shinymeta[metaRender2, metaExpr, ],
     # Import packages here
   )
 )
@@ -43,8 +39,8 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$layout_sidebar(
-    sidebar = bslib$sidebar(
+  layout_sidebar(
+    sidebar = sidebar(
       position = "left",
       selectInput(
         ns("x_var"), "Select x variable :", selectize = FALSE,
@@ -60,7 +56,7 @@ ui <- function(id) {
       ),
       source_code_module$ui(ns("source_code_module")),
     ),
-    echarts4r$echarts4rOutput(ns("echarts_plot"))
+    echarts4rOutput(ns("echarts_plot"))
   )
 }
 
@@ -68,9 +64,8 @@ ui <- function(id) {
 server <- function(id, selected_data, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      dataset = NULL,
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
     observeEvent(selected_data(), {
       update_var_select_input(
@@ -93,12 +88,12 @@ server <- function(id, selected_data, app_database_manager) {
       )
     })
 
-    output$echarts_plot <- shinymeta$metaRender2(
-      echarts4r$renderEcharts4r, {
+    output$echarts_plot <- metaRender2(
+      renderEcharts4r, {
         req(input$x_var)
         req(input$y_var)
 
-        shinymeta$metaExpr({
+        metaExpr({
           ..(isolate(selected_data())) %>%
             line_plot_echarts(
               x_var = ..(input$x_var),

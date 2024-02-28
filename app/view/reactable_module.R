@@ -41,9 +41,8 @@ ui <- function(id) {
 server <- function(id, dataset) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      # Initialize reactive values to be used in this module here
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
     output$reactable_output <- shinymeta$metaRender2(
       reactable$renderReactable, {

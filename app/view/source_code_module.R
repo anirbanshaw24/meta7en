@@ -49,10 +49,8 @@ ui <- function(id) {
 server <- function(id, output_to_trace, packages, modules) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-
-    module_reactive_values <- reactiveValues(
-      source_code = NULL,
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
     observeEvent(input$view_code, {
       source_code <- shinymeta$expandChain(

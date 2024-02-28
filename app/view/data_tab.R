@@ -3,15 +3,9 @@ packages_code <- quote(
   box::use(
     shiny[...],
     magrittr[`%>%`, ],
-    bslib,
-    shinymeta,
-    brio,
-    bsicons,
-    dplyr,
-    rlang,
-    dbplyr,
-    DT,
-    pool,
+    bslib[layout_sidebar, accordion, accordion_panel, card, sidebar, ],
+    shinymeta[metaReactive2, metaExpr, ],
+    rlang[expr, ],
     # Import packages here
   )
 )
@@ -45,24 +39,24 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$layout_sidebar(
-    sidebar = bslib$sidebar(
+  layout_sidebar(
+    sidebar = sidebar(
       id = ns("sidebar"),
       width = "25vw",
-      bslib$accordion(
+      accordion(
         id = ns("sidebar_accordion"),
         multiple = FALSE,
-        bslib$accordion_panel(
+        accordion_panel(
           value = "select_data",
           "Select Data",
           select_data_module$ui(ns("select_data_module"))
         ),
-        bslib$accordion_panel(
+        accordion_panel(
           value = "set_var_types",
           "Set Variable Types",
           set_col_class_module$ui(ns("set_col_class_module"))
         ),
-        bslib$accordion_panel(
+        accordion_panel(
           value = "select_vars",
           "Select",
           selectInput(
@@ -72,9 +66,9 @@ ui <- function(id) {
         )
       )
     ),
-    bslib$card(
-      bslib$layout_sidebar(
-        sidebar = bslib$sidebar(
+    card(
+      layout_sidebar(
+        sidebar = sidebar(
           width = "12vw",
           position = "right",
           source_code_module$ui(ns("source_code_module")),
@@ -94,16 +88,13 @@ server <- function(id, app_database_manager) {
 
     data_name <- select_data_module$server("select_data_module")
 
-    selected_data <- shinymeta$metaReactive2({
+    selected_data <- metaReactive2({
       req(data_name$data_name())
-      shinymeta$metaExpr({
-        pool$poolWithTransaction(app_database_manager@db_pool, function(connection) {
-          dplyr$tbl(
-            connection,
+      metaExpr({
+        app_database_manager %>%
+          database_manager$read_table_from_db(
             ..(data_name$data_name())
-          ) %>%
-            dplyr$collect()
-        })
+          )
       })
     }, varname = "selected_data")
 
@@ -112,12 +103,12 @@ server <- function(id, app_database_manager) {
     )
     col_class_set_data <- col_class_set_list$data
 
-    data_to_show <- shinymeta$metaReactive2({
+    data_to_show <- metaReactive2({
       to_show <- selected_data
       req(input$sidebar_accordion)
       if (input$sidebar_accordion == "select_data") to_show <- selected_data
       else if (input$sidebar_accordion == "set_var_types") to_show <- col_class_set_data
-      shinymeta$metaExpr({
+      metaExpr({
         ..(to_show())
       })
     }, varname = "data_to_show")
@@ -126,11 +117,11 @@ server <- function(id, app_database_manager) {
 
     source_code_module$server(
       "source_code_module", dt_output$dt_output,
-      packages = rlang$expr({
+      packages = expr({
         !!packages_code
         !!set_col_class_module$packages_code
       }),
-      modules = rlang$expr({
+      modules = expr({
         !!function_modules_code
         !!set_col_class_module$function_modules_code
       })

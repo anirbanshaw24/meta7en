@@ -90,9 +90,8 @@ ui <- function(id) {
 server <- function(id, app_database_manager) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      # Initialize reactive values to be used in this module here
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
     data_name <- select_data_module$server("select_data_module")
 
