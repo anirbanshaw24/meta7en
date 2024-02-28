@@ -2,11 +2,9 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    glue,
-    purrr,
+    magrittr[`%>%`, ],
+    glue[glue, ],
+    purrr[map, ],
     # Import packages here
   )
 )
@@ -35,8 +33,8 @@ ui <- function(id, main_page_constants) {
 
   div(
     class = "app-footer",
-    glue$glue("App v{main_page_constants$app_version} | "),
-    glue$glue("Maintained by"),
+    glue("App v{main_page_constants$app_version} | "),
+    glue("Maintained by"),
     HTML("&nbsp;"),
     tags$a(
       href = "https://www.linkedin.com/in/anirban-shaw",
@@ -46,7 +44,7 @@ ui <- function(id, main_page_constants) {
     div(
       class = "footer-images",
       "Built With",
-      purrr$map(main_page_constants$footer_images, function(x) {
+      map(main_page_constants$footer_images, function(x) {
         img(src = file.path("static", "images", x))
       })
     )

@@ -3,9 +3,8 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
+    magrittr[`%>%`, ],
+    bslib[card, ],
     # Import packages here. Intead of library calls.
   )
 )
@@ -33,7 +32,7 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card(
+  card(
     "Add Your UI Code Here"
   )
 }

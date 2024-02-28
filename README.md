@@ -4,19 +4,21 @@ author: Anirban Shaw
 date: 26 Feb, 2024
 ---
 
-<img align="right" width="100" height="115" src="app/static/images/app_hex.png">
-
-# A { bslib } - { rhino } app built with { shinymeta } and { S7 } classes
-
 <!-- badges: start -->
 [![r-unit-test-lint](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/r-unit-test-lint.yml)
 [![build-js-sass](https://github.com/anirbanshaw24/meta7en/actions/workflows/build-js-sass.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/build-js-sass.yml)
 [![e2e-test](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml)
 <!-- badges: end -->
 
+<img align="right" width="100" height="115" src="app/static/images/app_hex.png">
+
+# A { bslib } ~ { rhino } app built with { shinymeta } and { S7 } classes
+
 ## Overview
 
 meta7en is an R Shiny application showcasing the synergy of { S7 } classes, { shinymeta }, { bslib }, and { rhino }. This combination delivers a cutting-edge, robust, scalable, user-friendly, and themed application. It leverages modularity and theming to provide a fast and pleasant user experience.
+
+<a href="https://anirbanshaw24.shinyapps.io/meta7en" target="_blank"><img align="center" style="border: 1px solid black;" width="1000" src="app/static/images/app_main.png"></a>
 
 ## Key Features
 

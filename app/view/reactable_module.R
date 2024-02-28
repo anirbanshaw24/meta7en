@@ -2,10 +2,10 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
-    reactable,
+    reactable[...],
+    magrittr[`%>%`, ],
+    bslib[card, ],
+    shinymeta[metaRender2, metaExpr, ],
     # Import packages here
   )
 )
@@ -32,8 +32,8 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card(
-    reactable$reactableOutput(ns("reactable_output"))
+  card(
+    reactableOutput(ns("reactable_output"))
   )
 }
 
@@ -41,16 +41,15 @@ ui <- function(id) {
 server <- function(id, dataset) {
   moduleServer(id, function(input, output, session) {
 
-    module_reactive_values <- reactiveValues(
-      # Initialize reactive values to be used in this module here
-    )
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
-    output$reactable_output <- shinymeta$metaRender2(
-      reactable$renderReactable, {
+    output$reactable_output <- metaRender2(
+      renderReactable, {
         req(dataset())
-        shinymeta$metaExpr({
+        metaExpr({
           ..(dataset()) %>%
-            reactable$reactable()
+            reactable()
         })
       }
     )

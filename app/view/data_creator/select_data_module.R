@@ -2,11 +2,10 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
-    bslib,
-    shinymeta,
+    magrittr[`%>%`, ],
+    bslib[card_body, ],
+    shinymeta[metaReactive2, metaExpr],
     datasets,
-    purrr,
     # Import packages here
   )
 )
@@ -36,7 +35,7 @@ eval(shiny_modules_code)
 ui <- function(id) {
   ns <- NS(id)
 
-  bslib$card_body(
+  card_body(
     selectInput(
       inputId = ns("select_data"), label = "Select Data",
       choices = ""
@@ -47,24 +46,21 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    # Initialize reactive values to be used in this module here
+    module_reactive_values <- reactiveValues()
 
-    module_reactive_values <- reactiveValues(
-      data_choices = names(datasets),
-      # Initialize reactive values to be used in this module here
-    )
-
-    observeEvent(module_reactive_values$data_choices, {
-      module_reactive_values$data_choices <- get_valid_data_names(
+    observe({
+      data_choices <- get_valid_data_names(
         datasets = datasets
       )
       updateSelectInput(
-        inputId = "select_data", choices = module_reactive_values$data_choices
+        inputId = "select_data", choices = data_choices
       )
     })
 
-    data_name <- shinymeta$metaReactive2({
+    data_name <- metaReactive2({
       req(input$select_data)
-      shinymeta$metaExpr({
+      metaExpr({
         ..(input$select_data)
       })
     }, varname = "data_name")
