@@ -10,9 +10,9 @@ date: 26 Feb, 2024
 [![e2e-test](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/anirbanshaw24/meta7en/actions/workflows/e2e-test.yml)
 <!-- badges: end -->
 
-<img align="right" width="100" height="115" src="app/static/images/app_hex.png">
-
 # meta7en
+
+<img align="right" width="100" height="115" src="app/static/images/app_hex.png">
 
 ### A { bslib } ~ { rhino } Application
 ### Built with { shinymeta } and { S7 } classes
