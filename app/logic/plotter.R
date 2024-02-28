@@ -1,5 +1,5 @@
 box::use(
-  magrittr[...],
+  magrittr[`%>%`, ],
   datasets,
   ggplot2,
   rlang,

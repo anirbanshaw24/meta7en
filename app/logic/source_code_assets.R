@@ -1,7 +1,7 @@
 box::use(
+  magrittr[`%>%`, ],
   purrr,
   config,
-  magrittr[...],
   rlang,
 )
 

@@ -1,5 +1,5 @@
 box::use(
-  magrittr[...],
+  magrittr[`%>%`, ],
 )
 
 #' @export

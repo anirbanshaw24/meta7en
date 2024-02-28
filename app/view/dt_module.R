@@ -2,7 +2,7 @@
 packages_code <- quote(
   box::use(
     shiny[...],
-    magrittr[...],
+    magrittr[`%>%`, ],
     bslib,
     shinymeta,
     DT,
