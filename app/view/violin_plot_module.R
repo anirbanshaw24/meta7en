@@ -12,11 +12,11 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
+    app/logic/database_manager,
     app/logic/plotter[plot_violin, ],
     app/logic/shiny_helpers[
       update_var_select_input, get_true_false_choices
     ],
-    app/logic/database_manager,
     app/logic/data_processor[process_data],
     # Import function modules here
   )

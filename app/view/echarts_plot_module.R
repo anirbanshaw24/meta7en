@@ -13,10 +13,10 @@ packages_code <- quote(
 # Logic and Function Modules
 function_modules_code <- quote(
   box::use(
+    app/logic/database_manager,
     app/logic/plotter[
       line_plot_echarts, get_factor_columns
     ],
-    app/logic/database_manager,
     app/logic/data_processor[process_data],
     app/logic/shiny_helpers[update_var_select_input],
     # Import function modules here
