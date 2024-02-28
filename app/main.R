@@ -144,12 +144,7 @@ ui <- function(id) {
       icon = bs_icon("info-square"),
       title = "Read Me",
       card(
-        HTML(
-          markdownToHTML(
-            knit("README.md", quiet = TRUE),
-            fragment.only = TRUE
-          )
-        )
+        includeMarkdown("README.md")
       )
     )
   )
