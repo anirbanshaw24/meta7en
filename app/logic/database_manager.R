@@ -3,7 +3,7 @@ box::use(
   datasets,
   pool[
     dbPool, poolWithTransaction, dbReadTable, dbWriteTable,
-    dbRemoveTable, dbIsValid, poolClose,
+    dbRemoveTable, dbIsValid, poolClose, dbGetQuery
   ],
   duckdb[duckdb_shutdown, duckdb, ],
   rlang[inform, abort, env_parent, ],
@@ -27,6 +27,7 @@ database_manager <- new_class(
   ),
   constructor = function(
       db_config, db_password_env_var = "DB_PASSWORD", db_driver) {
+    db_config$db_dir <- do.call(file.path, as.list(db_config$db_dir))
     pool <- dbPool(
       drv = db_driver,
       dbname = db_config$db_name,

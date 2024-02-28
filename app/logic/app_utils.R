@@ -27,16 +27,6 @@ get_db_setup_code <- function() {
       db_config = app_config$database,
       db_driver = duckdb()
     )
-
-    "# Write dataframes from datasets to duckdb"
-    walk(get_valid_data_names(datasets = datasets), function(dataset) {
-      app_database_manager %>%
-        write_table_to_db(
-          table_name = dataset,
-          dataset = datasets[[dataset]] %>%
-            as.data.frame()
-        )
-    })
   })
 }
 

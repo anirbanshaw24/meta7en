@@ -1,0 +1,8 @@
+default:
+  user_name: "default"
+  db_name: "duck_db"
+  db_dir:
+    - "db_dir"
+    - "duck_db"
+    - "app_db.db"
+  host: ""
