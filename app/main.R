@@ -29,7 +29,6 @@ function_modules_code <- quote(
     app/logic/data_processor[get_valid_data_names],
     app/logic/app_utils[
       get_db_setup_code, get_n_colors,
-      build_app_hex
     ],
     # Import function modules here
   )

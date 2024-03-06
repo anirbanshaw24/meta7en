@@ -48,23 +48,3 @@ register_echarts_theme <- function(app_theme) {
     ), name = "app_theme"
   )
 }
-
-#' @export
-build_app_hex <- function(
-    app_theme, hex_image = "app/static/images/hex_image.png",
-    hex_output = "app/static/images/app_hex.png") {
-  sticker(
-    package = "meta7en",
-    h_fill = app_theme$primary,
-    p_color = app_theme$light,
-    h_color = app_theme$secondary,
-    u_color = app_theme$success,
-    hex_image,
-    p_size = 80,
-    s_x = 0.95,
-    s_y = 0.7,
-    s_width = 0.7,
-    dpi = 800,
-    filename = hex_output
-  )
-}
