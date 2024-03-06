@@ -27,11 +27,10 @@ database_manager <- new_class(
   ),
   constructor = function(
       db_config, db_password_env_var = "DB_PASSWORD", db_driver) {
-    db_config$db_dir <- do.call(file.path, as.list(db_config$db_dir))
+
     pool <- dbPool(
       drv = db_driver,
       dbname = db_config$db_name,
-      dbdir = db_config$db_dir,
       host = db_config$host,
       username = db_config$user_name,
       password = Sys.getenv(db_password_env_var),
@@ -116,7 +115,7 @@ method(disconnect_db, database_manager) <- function(x) {
   if (dbIsValid(x@db_pool)) {
     inform("DB disconnecting.")
     poolClose(x@db_pool)
-    duckdb_shutdown(duckdb())
+    duckdb_shutdown(x@db_driver)
   } else {
     inform("DB disconnected.")
   }

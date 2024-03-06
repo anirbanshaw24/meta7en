@@ -14,7 +14,8 @@ packages_code <- quote(
     markdown[markdownToHTML, ],
     knitr[knit, ],
     duckdb[duckdb, ],
-    purrr[walk, ]
+    purrr[walk, ],
+    shinyjs[useShinyjs, disable, enable, ],
     # Import packages here
   )
 )
@@ -99,6 +100,9 @@ ui <- function(id) {
       info = app_theme$info,
       warning = app_theme$warning,
       danger = app_theme$danger,
+      base_font = app_theme$fonts$base_font,
+      heading_font = app_theme$fonts$heading_font,
+      code_font = app_theme$fonts$code_font,
     ) %>% {
       do.call(
         bs_add_variables,
@@ -113,6 +117,7 @@ ui <- function(id) {
     # Left Tabs
     nav_panel(
       title = main_page_constants$tab1_title,
+      useShinyjs(),
       welcome_tab$ui(ns("welcome_tab"))
     ),
     nav_panel(
@@ -166,6 +171,23 @@ server <- function(id) {
     eval(db_setup_code)
 
     read_me <- welcome_tab$server("welcome_tab")
+
+    observe({
+      req(input$main_page_navbar)
+      switch(
+        input$main_page_navbar,
+        Introduction = {
+          disable(selector = "a[data-value='Some Plots']", asis = TRUE)
+          disable(selector = "a[data-value='Inputs Demo']", asis = TRUE)
+        },
+        `Process Data` = {
+          enable(selector = "a[data-value='Some Plots']", asis = TRUE)
+        },
+        `Some Plots` = {
+          enable(selector = "a[data-value='Inputs Demo']", asis = TRUE)
+        }
+      )
+    })
 
     observeEvent(read_me(), ignoreInit = TRUE, {
       nav_select(

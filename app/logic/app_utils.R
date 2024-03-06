@@ -21,11 +21,11 @@ get_db_setup_code <- function() {
   quote({
     "# Get app config"
     app_config <- get(config = Sys.getenv("ENVIRONMENT"))
-
+    app_config$database$db_dir <- do.call(file.path, as.list(app_config$database$db_dir))
     "# Create new database_manager object"
     app_database_manager <- database_manager(
       db_config = app_config$database,
-      db_driver = duckdb()
+      db_driver = duckdb(app_config$database$db_dir)
     )
   })
 }

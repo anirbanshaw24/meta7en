@@ -3,7 +3,7 @@
 .bslib-page-navbar > .navbar,
 .bslib-page-dashboard > .navbar {
   padding-top: 0;
-  padding-bottom: 2px;
+  padding-bottom: 1px;
 }
 
 .nav-link {
@@ -15,6 +15,12 @@
   &.active,
   &:hover {
     background: adjust-color($secondary, $lightness: -20%);
+  }
+
+  box-shadow: 0 3px 0 0 $success;
+
+  &.disabled {
+    box-shadow: 0 3px 0 0 $danger;
   }
 }
 

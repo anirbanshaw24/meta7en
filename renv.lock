@@ -1366,9 +1366,12 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.4",
-      "OS_type": null,
+      "Source": "Repository",
       "Repository": "CRAN",
-      "Source": "Repository"
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "11abaf7c540ff33f94514d50f929bfd1"
     },
     "rex": {
       "Package": "rex",
@@ -1559,6 +1562,19 @@
         "shiny"
       ],
       "Hash": "96bb249d21b7473dbeb0311702ef5288"
+    },
+    "shinyjs": {
+      "Package": "shinyjs",
+      "Version": "2.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "jsonlite",
+        "shiny"
+      ],
+      "Hash": "802e4786b353a4bb27116957558548d5"
     },
     "shinymeta": {
       "Package": "shinymeta",
