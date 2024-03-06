@@ -1,6 +1,6 @@
 box::use(
   hexSticker[sticker, ],
-  magick[image_read, image_write, ]
+  magick[image_read, image_write, image_resize, image_extent, ],
 )
 
 build_app_hex <- function(
@@ -22,12 +22,8 @@ build_app_hex <- function(
 }
 app_theme <- get(file = file.path("constants", "theme.yml"))
 build_app_hex(app_theme)
+
 app_hex <- image_read("app/static/images/app_hex.png") %>%
-  magick::image_resize("512x512")
-blank <- magick::image_blank(
-  width = "512", height = "512", color = "none"
-)
-magick::image_composite(
-  blank, app_hex, gravity = "Center", bg = "white"
-) %>%
-  magick::image_write("app/static/favicon.ico")
+  image_resize("512x512") %>%
+  image_extent("512x512") %>%
+  image_write("app/static/favicon.ico")
