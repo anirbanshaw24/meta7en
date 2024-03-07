@@ -41,9 +41,9 @@ ui <- function(id) {
     sidebar = sidebar(
       id = ns("plot_tab_sidebar"),
       accordion(
+        id = ns("plot_tab_sidebar_accordion"),
         multiple = FALSE,
         accordion_panel(
-          id = ns("plot_tab_sidebar_accordion"),
           value = "select_data",
           "User Inputs", icon = bs_icon("menu-app"),
           select_data_module$ui(ns("select_data_module")),

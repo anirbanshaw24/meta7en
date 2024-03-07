@@ -40,6 +40,7 @@ ui <- function(id) {
 
   layout_sidebar(
     sidebar = sidebar(
+      id = ns("echarts_sidebar"),
       position = "left",
       selectInput(
         ns("x_var"), "Select x variable :", selectize = FALSE,

@@ -37,6 +37,7 @@ ui <- function(id) {
 
   layout_sidebar(
     sidebar = sidebar(
+      id = ns("histogram_sidebar"),
       position = "right",
       selectInput(
         ns("x_var"), "Select x variable :",

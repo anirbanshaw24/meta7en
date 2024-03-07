@@ -55,7 +55,11 @@ server <- function(id, dataset) {
     })
 
     list(
-      dt_output = output$dt_output
+      dt_output = output$dt_output,
+      dt_code = list(
+        packages_code = packages_code,
+        function_modules_code = function_modules_code
+      )
     )
   })
 }

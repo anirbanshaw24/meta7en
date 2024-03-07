@@ -39,6 +39,7 @@ ui <- function(id) {
 
   layout_sidebar(
     sidebar = sidebar(
+      id = ns("violin_plot_sidebar"),
       position = "left",
       selectInput(
         ns("x_var"), "Select x variable :",
@@ -56,7 +57,7 @@ ui <- function(id) {
       ),
       source_code_module$ui(ns("source_code_module")),
     ),
-    plotOutput(ns("dynamite_plot"))
+    plotOutput(ns("violin_plot"))
   )
 }
 
@@ -70,7 +71,8 @@ server <- function(id, selected_data) {
     observeEvent(selected_data(), {
 
       update_var_select_input(
-        input_id = "x_var", selected_data(), session = session
+        input_id = "x_var", selected_data(),
+        session = session
       )
       update_var_select_input(
         input_id = "y_var", selected_data(),
@@ -78,7 +80,7 @@ server <- function(id, selected_data) {
       )
     })
 
-    output$dynamite_plot <- metaRender2(renderPlot, {
+    output$violin_plot <- metaRender2(renderPlot, {
       req(input$x_var)
       req(input$y_var)
 
@@ -93,7 +95,7 @@ server <- function(id, selected_data) {
     })
 
     source_code_module$server(
-      "source_code_module", output$dynamite_plot,
+      "source_code_module", output$violin_plot,
       packages = packages_code,
       modules = function_modules_code
     )
