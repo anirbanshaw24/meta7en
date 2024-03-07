@@ -10,7 +10,7 @@ output:
 ```{r setup, results="hide", message=FALSE, class.source = 'fold-hide'}
 renv::restore(prompt = FALSE)
 box::use(knitr[opts_chunk, ])
-knitr$opts_chunk$set(
+opts_chunk$set(
   out.width = "100%",
   tidy = TRUE,
   tidy.opts = list(width.cutoff = 30)

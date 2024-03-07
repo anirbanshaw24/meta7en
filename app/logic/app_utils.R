@@ -21,22 +21,12 @@ get_db_setup_code <- function() {
   quote({
     "# Get app config"
     app_config <- get(config = Sys.getenv("ENVIRONMENT"))
-
+    app_config$database$db_dir <- do.call(file.path, as.list(app_config$database$db_dir))
     "# Create new database_manager object"
     app_database_manager <- database_manager(
       db_config = app_config$database,
-      db_driver = duckdb()
+      db_driver = duckdb(app_config$database$db_dir)
     )
-
-    "# Write dataframes from datasets to duckdb"
-    walk(get_valid_data_names(datasets = datasets), function(dataset) {
-      app_database_manager %>%
-        write_table_to_db(
-          table_name = dataset,
-          dataset = datasets[[dataset]] %>%
-            as.data.frame()
-        )
-    })
   })
 }
 
@@ -56,25 +46,5 @@ register_echarts_theme <- function(app_theme) {
     jsonlite$toJSON(
       list(color = c(app_theme$secondary, app_theme$primary, app_theme$success))
     ), name = "app_theme"
-  )
-}
-
-#' @export
-build_app_hex <- function(
-    app_theme, hex_image = "app/static/images/hex_image.png",
-    hex_output = "app/static/images/app_hex.png") {
-  sticker(
-    package = "meta7en",
-    h_fill = app_theme$primary,
-    p_color = app_theme$light,
-    h_color = app_theme$secondary,
-    u_color = app_theme$success,
-    hex_image,
-    p_size = 80,
-    s_x = 0.95,
-    s_y = 0.7,
-    s_width = 0.7,
-    dpi = 800,
-    filename = hex_output
   )
 }

@@ -31,7 +31,9 @@ get_source_code_preffix <- function(packages_code, modules_code) {
 
     "# Import modules"
     box::use(
-      app/logic/database_manager,
+      app/logic/database_manager[
+        database_manager, disconnect_database, read_table_from_db,
+      ],
       app/logic/data_processor[get_valid_data_names],
       # Import function modules here
     )
@@ -47,7 +49,7 @@ get_source_code_suffix <- function() {
   quote({
     "# Disconnect and shutdown database connection"
     app_database_manager %>%
-      database_manager$disconnect_database()
+      disconnect_database()
   })
 }
 

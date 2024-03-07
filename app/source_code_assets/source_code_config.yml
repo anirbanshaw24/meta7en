@@ -32,6 +32,11 @@ default:
         - "app"
         - "source_code_assets"
         - "code.Rproj"
+    db_dir:
+      source_code:
+        - "db_dir"
+      app_code:
+        - "db_dir"
     config:
       source_code:
         - "config.yml"

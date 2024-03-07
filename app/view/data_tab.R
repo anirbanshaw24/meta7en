@@ -120,10 +120,12 @@ server <- function(id, app_database_manager) {
       packages = expr({
         !!packages_code
         !!set_col_class_module$packages_code
+        !!dt_output$dt_code$packages_code
       }),
       modules = expr({
         !!function_modules_code
         !!set_col_class_module$function_modules_code
+        !!dt_output$dt_code$function_modules_code
       })
     )
   })

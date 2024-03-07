@@ -5,7 +5,10 @@ default:
   database:
     user_name: "default"
     db_name: "duck_db"
-    db_dir: ":memory:"
+    db_dir:
+      - "db_dir"
+      - "duck_db"
+      - "app_db.db"
     host: ""
   warn_option: 0
   bookmark_location: "server"
@@ -14,7 +17,10 @@ shinyapps:
   database:
     user_name: "production"
     db_name: "duck_db"
-    db_dir: ":memory:"
+    db_dir:
+      - "db_dir"
+      - "duck_db"
+      - "app_db.db"
     host: ""
   warn_option: -1
   bookmark_location: "url"
@@ -23,7 +29,10 @@ dev:
   database:
     user_name: "developer"
     db_name: "duck_db"
-    db_dir: ":memory:"
+    db_dir:
+      - "db_dir"
+      - "duck_db"
+      - "app_db.db"
     host: ""
   warn_option: 0
   bookmark_location: "server"
