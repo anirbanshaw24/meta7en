@@ -1,6 +1,6 @@
 // stylelint-disable scss/no-global-function-names
 
-$scroll_width : 5px;
+$scroll-width: 5px;
 
 body {
   padding-top: 3rem !important;
@@ -13,17 +13,15 @@ body {
 }
 
 *::-webkit-scrollbar {
-  width: $scroll_width !important;
+  width: $scroll-width !important;
 }
 
 *::-webkit-scrollbar-track {
   border-radius: $scroll_width;
-  background-color: none;
-  // border: 1px solid adjust-color($secondary, $lightness: 30%);
-  // box-shadow: inset 0 0 6px adjust-color($secondary, $lightness: -5%);
+  background-color: $light;
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: $scroll_width;
+  border-radius: $scroll-width;
   background-color: $primary;
 }
